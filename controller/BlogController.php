@@ -1,7 +1,7 @@
 <?php
 namespace Enzo\Popblog\Controller;
 
-class blogController extends Controller{
+class BlogController extends Controller{
     public function __construct()
     {
         parent::__construct();
