@@ -8,7 +8,7 @@
     "license": "mit",
     "autoload": {
         "psr-4": {
-            "Enzo\\Popblog\\": "src/"
+            "Enzo\\Popblog\\": "./"
         }
     }
 }

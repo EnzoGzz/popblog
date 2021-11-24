@@ -1,16 +1,23 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
+require './controller/Controller.php';
+require './controller/blogController.php';
 
-require "./controller/blogController.php";
+use Enzo\Popblog\Controller\blogController;
+
 
 if(isset($_GET['p'])) {
     switch ($_GET['p']){
         case "blog":
-            blog();
+            $c = new blogController();
+            $c->blog();
             break;
         default :
-            home();
+            $c = new blogController();
+            $c->blog();
             break;
     }
 }else{
-    home();
+    $c = new blogController();
+    $c->blog();
 }
