@@ -1,0 +1,14 @@
+{
+    "name": "enzo/popblog",
+    "description": "un blog en mvc",
+    "type": "project",
+    "require": {
+        "twig/twig": "^3.3"
+    },
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "Enzo\\Popblog\\": "src/"
+        }
+    }
+}
