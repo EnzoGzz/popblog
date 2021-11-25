@@ -5,7 +5,6 @@ class BlogController extends Controller{
     public function __construct()
     {
         parent::__construct();
-        var_dump("test");
     }
 
     public function home()

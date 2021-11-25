@@ -10,8 +10,6 @@ class Controller
 
     public function __construct()
     {
-
-
         $loader = new FilesystemLoader(__DIR__ . '/../view');
         $this->twig = new Environment($loader);
     }
