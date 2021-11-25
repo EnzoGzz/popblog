@@ -1,5 +1,6 @@
 <?php
-namespace Enzo\Popblog\Controller;
+
+namespace App\Controller;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -10,7 +11,7 @@ class Controller
 
     public function __construct()
     {
-        $loader = new FilesystemLoader(__DIR__ . '/../view');
+        $loader = new FilesystemLoader(__DIR__ . '/../../view');
         $this->twig = new Environment($loader);
     }
 

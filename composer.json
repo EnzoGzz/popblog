@@ -1,5 +1,5 @@
 {
-    "name": "enzo/popblog",
+    "name": "lcv/popblog",
     "description": "un blog en mvc",
     "type": "project",
     "require": {
@@ -8,7 +8,7 @@
     "license": "mit",
     "autoload": {
         "psr-4": {
-            "Enzo\\Popblog\\": "./"
+            "App\\": "app/"
         }
     }
 }

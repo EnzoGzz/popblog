@@ -1,5 +1,6 @@
 <?php
-namespace Enzo\Popblog\Controller;
+
+namespace App\Controller;
 
 class BlogController extends Controller{
     public function __construct()

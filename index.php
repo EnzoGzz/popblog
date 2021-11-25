@@ -1,13 +1,8 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
-//require './controller/Controller.php';
-//require './controller/BlogController.php';
-//require './config/Autoloader.php';
 
-use Enzo\Popblog\Config\Autoloader;
-use Enzo\Popblog\Controller\blogController;
+require_once __DIR__ . '/vendor/autoload.php';
 
-Autoloader::register();
+use App\Controller\BlogController;
 
 if(isset($_GET['p'])) {
     $c = new blogController();
