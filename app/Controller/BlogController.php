@@ -10,11 +10,10 @@ class BlogController extends Controller{
 
     public function home()
     {
-        echo $this->twig->render('template.twig', ['test' => 'John Doe']);
+        $this->render('template', ['test' => 'John Doe']);
     }
-
-    public function blog()
+    public function blog(string $test)
     {
-        echo $this->twig->render('template.twig', ['test' => 'John Doe']);
+        $this->render('template', ['test' => $test]);
     }
 }
