@@ -4,7 +4,7 @@ namespace App\Route;
 
 class Route{
     private PathRoute $pathRoute;
-    private mixed $controllerName;
+    private string $controllerName;
     private string $methodName;
     private array $args;
 
@@ -42,7 +42,7 @@ class Route{
     /**
      * @return mixed
      */
-    public function getControllerName(): mixed
+    public function getControllerName(): string
     {
         return $this->controllerName;
     }

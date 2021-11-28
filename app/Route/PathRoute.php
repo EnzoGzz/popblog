@@ -21,8 +21,8 @@ class PathRoute extends Path
 
         $pathPattern = str_replace("/","\/",$this->path);
 
-        $this->pathPattern = preg_replace("/{[:a-zA-z0-9-_]+}/m","([:a-zA-z0-9-_]+)",$pathPattern);
-        $this->pathPattern = "/^".$this->pathPattern."$/m";
+        $this->pathPattern = preg_replace("/{[:a-zA-z0-9-_]+}/","([:a-zA-z0-9-_]+)",$pathPattern);
+        $this->pathPattern = "/^".$this->pathPattern."$/";
     }
 
     public function matchWith(Path $path): bool|int
@@ -48,7 +48,7 @@ class PathRoute extends Path
 
     private function extractVarsName(Path $path): void
     {
-        preg_match_all("/{[:a-zA-z0-9-_]+}/m",$path,$varsName);
+        preg_match_all("/{[:a-zA-z0-9-_]+}/",$path,$varsName);
         $this->varsName = $varsName[0];
     }
 
