@@ -21,14 +21,14 @@ class BlogController extends Controller{
         $news = $newsGw->all();
         $this->render('Home', []);
     }
-    public function news()
+    public function post()
     {
         $newsGw = new NewsGW($this->con);
         $news = $newsGw->all();
         $this->render('Post', ['allNews' => $news]);
     }
 
-    public function showNews(int $id)
+    public function showPost(int $id)
     {
         $newsGw = new NewsGW($this->con);
         $news = $newsGw->find($id);
