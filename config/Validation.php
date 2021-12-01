@@ -10,4 +10,13 @@ class Validation
             throw new Exception("Int invalide");
         }
     }
+
+    /**
+     * @throws Exception
+     */
+    public static function require($var){
+        if(empty($var)){
+            throw new Exception("Variable vide");
+        }
+    }
 }

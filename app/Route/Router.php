@@ -17,6 +17,7 @@ class Router
             require_once "routes.php";
             $path = $_SERVER['REQUEST_URI'];
             $route = self::matchFromPath(new Path($path));
+
             $controllerName = $route->getControllerName();
             $methodName = $route->getMethodName();
             $args = $route->getArgs();
