@@ -12,7 +12,6 @@ class Connection extends PDO
     public function __construct(string $dbname,string $driver = "mysql",string $host = "localhost",int $port = 3306, $username = null, $password = null, $options = null)
     {
         try{
-            echo $driver.":host=".$host.":".$port.";dbname=".$dbname."<br>";
             parent::__construct($driver.":host=".$host.":".$port.";dbname=".$dbname, $username, $password, $options);
             $this->setAttribute(PDO::ATTR_ERRMODE,	PDO::ERRMODE_EXCEPTION);
         }catch (PDOException $e){

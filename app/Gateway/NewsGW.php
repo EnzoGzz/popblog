@@ -15,10 +15,10 @@ class NewsGW
     }
 
     public function insert(string $title, string $desc){
-        $query='INSERT INTO	News VALUES (:title,:desc)';
+        $query='INSERT INTO	News (title, description) VALUES (:title,:description)';
         $this->connection->executeQuery($query,[
             ':title' =>	[$title,PDO::PARAM_STR],
-            ':desc' =>	[$desc,PDO::PARAM_STR]
+            ':description' =>	[$desc,PDO::PARAM_STR]
         ]);
     }
 
@@ -58,7 +58,7 @@ class NewsGW
         $this->connection->executeQuery($query);
         $results = $this->connection->getResults();
         foreach ($results as $result){
-            $news[] = new News($result["id"],$result["title"],$result["desc"]);
+            $news[] = new News($result["id"],$result["title"],$result["description"]);
         }
         return $news;
     }

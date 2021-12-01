@@ -23,6 +23,7 @@ class Router
             $this->exec($controllerName,$methodName,$args);
         }catch(Exception | Error $e){
             echo "404 Not found";
+            echo $e->getMessage();
         }
     }
 
