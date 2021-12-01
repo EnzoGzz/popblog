@@ -25,7 +25,7 @@ class BlogController extends Controller{
     {
         $newsGw = new NewsGW($this->con);
         $news = $newsGw->all();
-        $this->render('News', ['allNews' => $news]);
+        $this->render('Post', ['allNews' => $news]);
     }
 
     public function showNews(int $id)
@@ -33,7 +33,7 @@ class BlogController extends Controller{
         $newsGw = new NewsGW($this->con);
         $news = $newsGw->find($id);
         var_dump($news);
-        $this->render('News', ['allNews' => $news]);
+        $this->render('Post', ['allNews' => $news]);
     }
 
     public function insert()
