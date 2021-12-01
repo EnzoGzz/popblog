@@ -3,7 +3,7 @@
 namespace App\Gateway;
 
 use App\DB\Connection;
-use App\Model\News;
+use App\Model\Post;
 use PDO;
 
 class NewsGW
@@ -15,7 +15,7 @@ class NewsGW
     }
 
     public function insert(string $title, string $desc){
-        $query='INSERT INTO	News (title, description) VALUES (:title,:description)';
+        $query='INSERT INTO	Post (title, description) VALUES (:title,:description)';
         $this->connection->executeQuery($query,[
             ':title' =>	[$title,PDO::PARAM_STR],
             ':description' =>	[$desc,PDO::PARAM_STR]
@@ -23,14 +23,14 @@ class NewsGW
     }
 
     public function delete(int $id){
-        $query='DELETE FROM News WHERE id=:id';
+        $query='DELETE FROM Post WHERE id=:id';
         $this->connection->executeQuery($query,[
             ':id' => [$id,PDO::PARAM_INT],
         ]);
     }
 
     public function update(int $id, string $title, string $desc){
-        $query='UPDATE News SET title=:title,desc=:desc WHERE id=:id';
+        $query='UPDATE Post SET title=:title,desc=:desc WHERE id=:id';
         $this->connection->executeQuery($query,[
             ':id' => [$id,PDO::PARAM_INT],
             ':title' =>	[$title,PDO::PARAM_STR],
@@ -40,7 +40,7 @@ class NewsGW
 
     public function find(int $id)
     {
-        $query='Select * from News where id=:id';
+        $query='Select * from Post where id=:id';
         $this->connection->executeQuery($query,[
             ':id' => [$id,PDO::PARAM_INT],
         ]);
@@ -54,11 +54,11 @@ class NewsGW
     public function all(): array
     {
         $news = [];
-        $query='Select * from News';
+        $query='Select * from Post';
         $this->connection->executeQuery($query);
         $results = $this->connection->getResults();
         foreach ($results as $result){
-            $news[] = new News($result["id"],$result["title"],$result["description"]);
+            $news[] = new Post($result["id"],$result["title"],$result["description"]);
         }
         return $news;
     }

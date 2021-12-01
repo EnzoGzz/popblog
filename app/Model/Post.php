@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class News
+class Post
 {
     private int $id;
     private string $title;
