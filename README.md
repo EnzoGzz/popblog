@@ -15,6 +15,13 @@ Une news peut être écrite par des administrateurs. Les utilisateurs normaux ne
 
 La gestion d'erreurs doit être complète. (champs vérifiés, connection à la BD,etc.)
 
+## Installation
+**Prerequis** : [composer](https://getcomposer.org/download/)
+```
+git clone https://github.com/EnzoGzz/popblog.git
+composer install
+```
+
 Gonzalez Enzo
 Murat Romain
 G5
