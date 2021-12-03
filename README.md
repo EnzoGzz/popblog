@@ -14,3 +14,6 @@ Une news peut être écrite par des administrateurs. Les utilisateurs normaux ne
     optionnel : les champs tels que login, mot de passe, titre de news, peuvent aussi etre vérifiés en javascript. Un news peut être écrite en BBcode (bbcode) qui doit être traduit en HTML(ex: <b> </b>doit afficher du texte en gras) et optionnellement des smileys
 
 La gestion d'erreurs doit être complète. (champs vérifiés, connection à la BD,etc.) 
+
+La validation des variables passé en parametre par l'utilisateur n'est pas réalisé mais elle est implémenté partiellement dans le code.
+Toutes les fonctionnalités ne sont pas implémentées comme par exemple l'ajout de commentaire sous les postes, la gestions des postes par un administrateur, les utilisateurs.
