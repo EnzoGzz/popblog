@@ -21,7 +21,7 @@ class UserController extends Controller
         $this->render('Home');
     }
 
-    public function post()
+    public function blog()
     {
         $em_post = $this->em->getRepository(Post::class);
         $posts = $em_post->findAll();

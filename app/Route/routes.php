@@ -6,7 +6,7 @@ use App\Controller\UserController;
 use App\Route\Route;
 
 Route::create("/",[UserController::class,"home"]);
-Route::create("/blog",[UserController::class,"post"]);
+Route::create("/blog",[UserController::class,"blog"]);
 Route::create("/blog/{id}",[UserController::class,"showPost"]);
 Route::create("/blog/{id}/comment/insert",[UserController::class,"insertComment"]);
 Route::create("/contact",[UserController::class,"contact"]);
