@@ -4,11 +4,15 @@ Main css
 
 html{
     box-sizing: border-box;
+    height: 100%;
 }
 
 body{
+    height: 100%;
     margin: 0;
     padding: 0;
+    display: grid;
+    grid-template-rows: 0.125fr 1fr 0.125fr;
 }
 
 p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
@@ -28,4 +32,15 @@ nav#menu ul{
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+}
+/* Footer */
+section#footer{
+    height: 100%;
+    background-color: red;
+    text-align: center;
+}
+
+#footer__list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
