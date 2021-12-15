@@ -10,19 +10,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link rel="stylesheet" href="public/css/main.css">
     <title>Popblog</title>
 </head>
 <body>
     <header>
         <nav id="menu">
-            <ul>
+            <ul id="menu__list">
+                <li><a href="/"><img src="public/assets/logo.png" alt="logo" width="50px"></a></li>
                 <li><a href="/">Home</a></li>
                 <li><a href="blog">Blog</a></li>
                 <li><a href="contact">Contact us</a></li>
             </ul>
         </nav>
     </header>
+
+        <div id="theme-switch-wrapper">
+            <label id="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" style="display: none"/>
+                <i class="fas fa-moon fa-lg"></i>
+            </label>
+        </div>
 
     <section id="content">
         {% block content %}
@@ -42,4 +52,21 @@
         </section>
     </footer>
 </body>
+
+<script>
+    /*Light - Dark mode handler*/
+    const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    }
+
+    toggleSwitch.addEventListener('change', switchTheme, false);
+</script>
+
 </html>
