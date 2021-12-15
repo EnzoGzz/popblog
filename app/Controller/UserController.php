@@ -91,4 +91,8 @@ class UserController extends Controller
 
         $this->redirect("/post/$id");
     }
+
+    public function contact(){
+        $this->render('Contact');
+    }
 }

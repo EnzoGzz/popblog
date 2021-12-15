@@ -1,0 +1,31 @@
+/*
+Main css
+*/
+
+html{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
+    color: black;
+    font-family: 'Nunito', 'Arial', sans-serif;
+    text-decoration: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Menu */
+nav#menu{
+    background-color: lightblue;
+}
+nav#menu ul{
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+}
