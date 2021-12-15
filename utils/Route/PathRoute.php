@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Route;
+namespace Utils\Route;
 
 class PathRoute extends Path
 {
