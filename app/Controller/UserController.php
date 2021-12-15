@@ -6,8 +6,8 @@ use App\Model\Comment;
 use App\Model\Post;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Utils\Validation;
-use Utils\Exception\ValidationException;
+use utils\Validation;
+use utils\Exception\ValidationException;
 
 class UserController extends Controller
 {
