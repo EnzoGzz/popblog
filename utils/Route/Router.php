@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Route;
+namespace Utils\Route;
 
 use Doctrine\ORM\EntityManager;
 use Error;
@@ -29,8 +29,7 @@ class Router
             }
             $controller(...array_values($args));
         }catch(Exception | Error $e){
-            echo $e->getMessage();
-            echo "404 Not found";
+            header('HTTP/1.0 404 Baise tes morts');
         }
     }
 

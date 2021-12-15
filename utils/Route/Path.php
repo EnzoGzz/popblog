@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Route;
+namespace Utils\Route;
 
 use JetBrains\PhpStorm\Pure;
 

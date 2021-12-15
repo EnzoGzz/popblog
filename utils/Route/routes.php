@@ -3,7 +3,7 @@
 
 use App\Controller\AdminController;
 use App\Controller\UserController;
-use App\Route\Route;
+use Utils\Route\Route;
 
 Route::create("/",[UserController::class,"home"]);
 Route::create("/blog",[UserController::class,"blog"]);
