@@ -1,10 +1,16 @@
 <?php
 
 
-use App\Controller\BlogController;
+use App\Controller\AdminController;
+use App\Controller\UserController;
 use App\Route\Route;
 
-Route::create("/",[BlogController::class,"home"]);
-Route::create("/post",[BlogController::class,"post"]);
-Route::create("/post/insert",[BlogController::class,"insert"]);
-Route::create("/post/{id}",[BlogController::class,"showPost"]);
+Route::create("/",[UserController::class,"home"]);
+Route::create("/post",[UserController::class,"post"]);
+Route::create("/post/{id}",[UserController::class,"showPost"]);
+Route::create("/post/{id}/comment/insert",[UserController::class,"insertComment"]);
+
+
+Route::create("/post/insert",[AdminController::class,"insertPost"]);
+Route::create("/login",[AdminController::class,"connexionVue"]);
+Route::create("/loginP",[AdminController::class,"connexion"]);

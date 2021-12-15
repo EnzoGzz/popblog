@@ -2,33 +2,36 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Exception;
 use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-class Controller
+abstract class Controller
 {
     private Environment $twig;
+    protected EntityManager $em;
+    protected array $errors;
 
-    public function __construct()
+    public function __construct(EntityManager $em)
     {
         $loader = new FilesystemLoader(__DIR__ . '/../../view');
         $this->twig = new Environment($loader);
+        $this->em = $em;
     }
 
-    protected function render(string $name, array $args)
+    protected function render(string $name, array $args = [])
     {
         try{
             echo $this->twig->render("$name.twig",$args);
-        }catch (RuntimeError $re){
-            echo $re->getMessage();
-        }catch (SyntaxError $se){
-            echo $se->getMessage();
-        }catch (LoaderError $le){
-            echo $le->getMessage();
+        }catch (Exception $e) {
+            echo $e->getMessage();
         }
+    }
+
+    protected function redirect(string $url)
+    {
+        header("Location: ".$url);
     }
 
 }

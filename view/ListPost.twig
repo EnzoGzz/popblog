@@ -1,15 +1,15 @@
 {% extends "template.twig" %}
 
 {% block content %}
-    {% for news in allNews %}
+    {% for post in posts %}
         <div class="news__item">
-            <h3>{{ news.title }}</h3>
-            <p>{{ news.desc }}</p>
+            <h3><a href="/post/{{ post.id }}">{{ post.title }}</a></h3>
+            <p>{{ post.description }}</p>
         </div>
         <hr>
     {% endfor %}
 
-    <form action="/~enzo/popblog/news/insert" method="POST">
+    <form action="/post/insert" method="POST">
         <input type="text" name="title">
         <input type="text" name="description">
         <input type="submit">

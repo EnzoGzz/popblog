@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="User")
+ * @ORM\Table(name="Comment")
  */
-class User
+class Comment
 {
     /**
      * @ORM\Id
@@ -17,16 +17,22 @@ class User
      * @var int
      */
     private int $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Post")
+     * @ORM\JoinColumn(name="post", referencedColumnName="id")
+     */
+    private mixed $post;
     /**
      * @ORM\Column(type="string")
      * @var string
      */
     private string $username;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @var string
      */
-    private string $password;
+    private string $comment;
 
     /**
      * @return int
@@ -63,17 +69,33 @@ class User
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getComment(): string
     {
-        return $this->password;
+        return $this->comment;
     }
 
     /**
-     * @param string $password
+     * @param string $comment
      */
-    public function setPassword(string $password): void
+    public function setComment(string $comment): void
     {
-        $this->password = $password;
+        $this->comment = $comment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPost(): mixed
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param $post
+     */
+    public function setPost($post): void
+    {
+        $this->post = $post;
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Route;
 
+use Doctrine\ORM\EntityManager;
 use Error;
 use Exception;
 
@@ -11,8 +12,9 @@ class Router
      * @var array
      */
     private static array $routes = [];
+    private static $_instance = null;
 
-    public function __construct(){
+    private function __construct($em){
         try{
             require_once "routes.php";
             $path = $_SERVER['REQUEST_URI'];
@@ -21,10 +23,14 @@ class Router
             $controllerName = $route->getControllerName();
             $methodName = $route->getMethodName();
             $args = $route->getArgs();
-            $this->exec($controllerName,$methodName,$args);
+            $controller = new $controllerName($em);
+            if (!is_callable($controller)) {
+                $controller =  [$controller, $methodName];
+            }
+            $controller(...array_values($args));
         }catch(Exception | Error $e){
-            echo "404 Not found";
             echo $e->getMessage();
+            echo "404 Not found";
         }
     }
 
@@ -51,18 +57,13 @@ class Router
         throw new Exception("No route found");
     }
 
-    /**
-     * @param string $controllerName
-     * @param string $methodName
-     * @param array $args
-     */
-    private function exec(string $controllerName, string $methodName, array $args)
+    public static function setup(EntityManager $em): ?Router
     {
-        $controller = new $controllerName();
-        if (!is_callable($controller)) {
-            $controller =  [$controller, $methodName];
+        if(is_null(self::$_instance)) {
+            self::$_instance = new Router($em);
         }
-        $controller(...array_values($args));
+
+        return self::$_instance;
     }
 
 }

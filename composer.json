@@ -3,8 +3,10 @@
     "description": "un blog en mvc",
     "type": "project",
     "require": {
-        "twig/twig": "^3.3",
-        "ext-pdo": "*"
+        "twig/twig": "*",
+        "ext-pdo": "*",
+        "doctrine/orm": "^2.10",
+        "symfony/cache" :"*"
     },
     "license": "mit",
     "autoload": {

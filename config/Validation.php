@@ -3,40 +3,84 @@
 class Validation
 {
     /**
-     * @throws Exception
+     * @param $var
+     * @throws ValidationException
      */
     public static function int($var){
-        if(!filter_var($var, FILTER_VALIDATE_INT)){
-            throw new Exception("Int invalide");
+        if(!filter_var($var, FILTER_VALIDATE_INT))throw new ValidationException("Entier invalide");
+    }
+
+    /**
+     * @param $var
+     * @throws ValidationException
+     */
+    public static function require($var){
+        if(empty($var)){
+            throw new ValidationException("Variable vide");
         }
     }
 
     /**
-     * @throws Exception
+     * @param $var
+     * @return mixed
      */
-    public static function require($var){
-        if(empty($var)){
-            throw new Exception("Variable vide");
-        }
-    }
-
     public static function string($var){
         return filter_var($var, FILTER_SANITIZE_STRING);
     }
 
     /**
-     * @throws Exception
+     * @param $var
+     * @param $min
+     * @param $max
+     * @throws ValidationException
      */
-    public static function between($var, $between1 = null, $between2 = null):bool
+    public static function between($var,$min, $max)
     {
-        self::int($var);
-        if($between1 == null)$between1 = $var-1;
-        if($between2 == null)$between2 = $var+1;
-        self::int($between1);
-        self::int($between2);
-        if($between1 < $var && $var < $between2){
-            return true;
+        try{
+            self::min($var,$min);
+            self::max($var,$max);
+        }catch (ValidationException $e){
+            throw new ValidationException("Le nombre doit être compris entre $min et $max");
         }
-        return false;
+    }
+
+    /**
+     * @param $var
+     * @param $max
+     * @throws ValidationException
+     */
+    public static function max($var,$max){
+        if($var > $max)throw new ValidationException("$var est supérieur à $max");
+    }
+
+    /**
+     * @param $var
+     * @param $min
+     * @throws ValidationException
+     */
+    public static function min($var,$min){
+        if($var > $min)throw new ValidationException("$var est inférieur à $min");
+    }
+
+    /**
+     * @param string $var
+     * @param int $max
+     * @throws ValidationException
+     */
+    public static function maxChar(string $var, int $max)
+    {
+        $var = self::string($var);
+        if(strlen($var) > $max)throw new ValidationException("Le nombre de caractère ne doit pas exceder $max");
+    }
+
+    /**
+     * @param string $var
+     * @param int $min
+     * @throws ValidationException
+     */
+    public static function minChar(string $var, int $min)
+    {
+        $var = self::string($var);
+        if(strlen($var) < $min)throw new ValidationException("Le nombre de caractère doit être supérieur à $min");
     }
 }

@@ -1,19 +1,32 @@
 <?php
 
 namespace App\Model;
+use Doctrine\ORM\Mapping as ORM;
 
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="Post")
+ */
 class Post
 {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     * @var int
+     */
     private int $id;
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     private string $title;
-    private string $desc;
-
-    public function __construct(int $id, string $title, string $desc)
-    {
-        $this->desc = $desc;
-        $this->id = $id;
-        $this->title = $title;
-    }
+    /**
+     * @ORM\Column(type="text")
+     * @var string
+     */
+    private string $description;
 
     /**
      * @return int
@@ -34,10 +47,36 @@ class Post
     /**
      * @return string
      */
-    public function getDesc(): string
+    public function getDescription(): string
     {
-        return $this->desc;
+        return $this->description;
     }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param string $desc
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+
 
 
 }

@@ -2,5 +2,5 @@
     RewriteEngine On
     RewriteBase /
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^[^\.]*(\.php|\.html|\.twig|\.$|$) /~enzo/popblog/index.php [L]
+    RewriteRule ^[^\.]*(\.php|\.html|\.twig|\.$|$) ./index.php [L]
 </IfModule>
