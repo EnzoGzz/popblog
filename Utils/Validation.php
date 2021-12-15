@@ -1,4 +1,7 @@
 <?php
+namespace Utils;
+
+use Utils\Exception\ValidationException;
 
 class Validation
 {

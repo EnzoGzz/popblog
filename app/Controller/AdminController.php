@@ -8,8 +8,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Exception;
-use Validation;
-use ValidationException;
+use Utils\Validation;
+use Utils\Exception\ValidationException;
 
 class AdminController extends Controller
 {

@@ -4,13 +4,10 @@ namespace App\Controller;
 
 use App\Model\Comment;
 use App\Model\Post;
-use App\Model\User;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Validation;
-use ValidationException;
+use Utils\Validation;
+use Utils\Exception\ValidationException;
 
 class UserController extends Controller
 {
