@@ -1,0 +1,11 @@
+#posts{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    grid-gap: 32px;
+}
+.post__card{
+    padding: 16px;
+
+    box-shadow: 0 0 8px var(--primary);
+    border-radius: 5px;
+}

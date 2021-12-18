@@ -1,13 +1,16 @@
 {% extends "template.twig" %}
 
 {% block content %}
-    <div>
-        <h2>{{ post.title }}</h2>
-        <p>
-            {{ post.description }}
-        </p>
+    <div id="posts">
+        <div>
+            <h2>{{ post.title }}</h2>
+            <p>
+                {{ post.description }}
+            </p>
+        </div>
     </div>
 
+    <p>test</p>
     <h1>Inserer un commentaire</h1>
     <form action="/post/{{ post.id }}/comment/insert" method="POST">
         <input type="text" name="username"/>

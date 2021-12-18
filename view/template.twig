@@ -25,7 +25,7 @@
     <header>
         <nav id="menu">
             <ul id="menu__list">
-                <li><a href="/"><img src="public/assets/logo_white.png" alt="logo" width="50px"></a></li>
+                <li><a href="/"><img id="menu__logo" src="public/assets/logo.png" alt="logo" width="50px"></a></li>
                 <li><a href="/">Home</a></li>
                 <li><a href="blog">Blog</a></li>
                 <li><a href="contact">Contact us</a></li>
@@ -49,7 +49,7 @@
     <footer>
         <section id="footer">
             <ul id="footer__list">
-                <li><a href="">Some</a></li>
+                <li><a href="/login">Log in</a></li>
                 <li><a href="">Meow</a></li>
                 <li><a href="">To</a></li>
                 <li><a href="">Miaou</a></li>
@@ -63,9 +63,11 @@
     /*Light - Dark mode handler*/
 
     const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+    const logo = document.querySelector('#menu__logo');
 
     if(getCookie("theme") === "dark"){
         toggleSwitch.checked = true;
+        logo.src = "/public/assets/logo_white.png"
         document.documentElement.setAttribute('data-theme', 'dark');
     }
 
@@ -73,10 +75,12 @@
         if (e.target.checked) {
             setCookie("theme","dark",30);
             document.documentElement.setAttribute('data-theme', 'dark');
+            logo.src = "/public/assets/logo_white.png"
         }
         else {
             setCookie("theme","light",30);
             document.documentElement.setAttribute('data-theme', 'light');
+            logo.src = "/public/assets/logo.png"
         }
     }
 

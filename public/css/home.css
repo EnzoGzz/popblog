@@ -1,12 +1,13 @@
-#hero{
+.hero{
     width: 100%;
     padding: 0 10% 0 10%;
+    margin-bottom: 32px;
 }
-#hero__title{
+.hero__title{
     display: flex;
     flex-direction: row;
 
 }
-#hero__title > i{
+.hero__title > i{
     padding-right: 4px;
 }

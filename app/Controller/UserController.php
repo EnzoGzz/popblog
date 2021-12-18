@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         $em_post = $this->em->getRepository(Post::class);
         $posts = $em_post->findAll();
-        $this->render('ListPost',[
+        $this->render('Blog',[
             "posts" => $posts
         ]);
     }
