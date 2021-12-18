@@ -1,11 +1,16 @@
 #posts{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
     grid-gap: 32px;
 }
 .post__card{
     padding: 16px;
 
-    box-shadow: 0 0 8px var(--primary);
-    border-radius: 5px;
+    background-color: var(--background);
+
+    box-shadow: var(--smooth-box-shadow);
+    border-radius: var(--border-radius);
+}
+[data-theme="dark"] .post__card{
+    background-color: var(--primary);
 }

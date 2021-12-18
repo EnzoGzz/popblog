@@ -1,5 +1,20 @@
 {% extends "template.twig" %}
 
+{% block style %}
+    <link rel="stylesheet" href="/public/css/contact.css">
+{% endblock %}
+
 {% block content %}
-    <p>Contact page</p>
+    <form id="contact" action="" method="POST">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email">
+        <br>
+        <label for="email">Subject</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <label for="content">Message</label>
+        <textarea name="message" id="message" cols="30" rows="10"></textarea>
+        <br>
+        <input type="submit" value="Send">
+    </form>
 {% endblock %}
