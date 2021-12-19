@@ -11,12 +11,15 @@ abstract class Controller
 {
     private Environment $twig;
     protected EntityManager $em;
-    protected array $errors;
+    protected array $errors = [];
 
     public function __construct(EntityManager $em)
     {
         $loader = new FilesystemLoader(__DIR__ . '/../../view');
         $this->twig = new Environment($loader);
+        $this->twig->addGlobal("session",$_SESSION);
+        $_COOKIE["errors"] = json_decode($_COOKIE["errors"] ?? null);
+        $this->twig->addGlobal("cookie",$_COOKIE);
         $this->em = $em;
     }
 
@@ -32,6 +35,11 @@ abstract class Controller
     protected function redirect(string $url)
     {
         header("Location: ".$url);
+    }
+
+    public function __destruct()
+    {
+        setcookie('errors', json_encode($this->errors), time() + 120);
     }
 
 }

@@ -29,7 +29,8 @@ class Router
             }
             $controller(...array_values($args));
         }catch(Exception | Error $e){
-            header('HTTP/1.0 404 Baise tes morts');
+            echo $e->getMessage();
+            header("HTTP/1.1 404 Not Found");
         }
     }
 

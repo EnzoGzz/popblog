@@ -69,6 +69,10 @@ input[type="text"],input[type="email"], textarea{
             inset 0 0 2px rgba(0,0,0,0.6);
     border-radius: 4px;
 }
+
+[data-theme="dark"] input[type="text"],input[type="email"], textarea{
+    background-color: white;
+}
 label, input[type="submit"]{
     font-weight: bold;
 }

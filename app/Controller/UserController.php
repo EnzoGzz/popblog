@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Model\Comment;
 use App\Model\Post;
+use App\Model\User;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use utils\Validation;
-use utils\Exception\ValidationException;
+use Exception;
+use Utils\Validation;
+use Utils\Exception\ValidationException;
 
 class UserController extends Controller
 {
@@ -27,7 +29,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function showPost(int $id)
+    public function showBlog(int $id)
     {
         try{
             Validation::int($id);
@@ -56,7 +58,7 @@ class UserController extends Controller
         try{
             Validation::int($id);
         } catch (ValidationException $e) {
-            //Vue erreur
+            $this->errors["InvalidBlog"] = "Invalid Blog";
         }
 
         $username = $_POST['username'];
@@ -64,14 +66,14 @@ class UserController extends Controller
             Validation::require($username);
             Validation::maxChar($username,255);
         } catch (ValidationException $e) {
-            //Vue erreur
+            $this->errors["InvalidUsername"] = "Invalid username - max 255 characters";
         }
         $commentText = $_POST['commentaire'];
         try{
             Validation::require($commentText);
             Validation::maxChar($commentText,2000);
         } catch (ValidationException $e) {
-            //Vue erreur
+            $this->errors["InvalidComment"] = "Invalid comment - max 255 characters";
         }
         $em_post = $this->em->getRepository(Post::class);
 
@@ -83,7 +85,7 @@ class UserController extends Controller
             $this->em->persist($comment);
             $this->em->flush();
         }catch (OptimisticLockException | ORMException $e) {
-            //Vue erreur
+            $this->errors["Error"] = "Please contact an administrator";
         }
 
         $this->redirect("/post/$id");
@@ -91,5 +93,40 @@ class UserController extends Controller
 
     public function contact(){
         $this->render('Contact');
+    }
+
+    public function connexion()
+    {
+        try{
+            $username = $_POST["username"] ?? "";
+            $password = $_POST["password"] ?? "";
+
+            Validation::require($username);
+            Validation::maxChar($username,255);
+            Validation::require($password);
+            Validation::maxChar($password,255);
+
+
+            $em_user = $this->em->getRepository(User::class);
+            $user = $em_user->findOneBy(["username"=>$username]);
+            if($user != NULL){
+                if(password_verify($password,$user->getPassword())){
+                    $_SESSION["login"]="login";
+                    header("Location: /");
+                }else{
+                    throw new Exception("Invalid password");
+                }
+            }else{
+                throw new Exception("Invalid username");
+            }
+        }catch (Exception $e){
+            $this->errors["InvalidLogin"] = "Invalid login";
+            header("Location: /login");
+        }
+
+    }
+
+    public function connexionVue(){
+        $this->render("Connexion");
     }
 }

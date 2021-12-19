@@ -8,20 +8,17 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Exception;
-use utils\Validation;
-use utils\Exception\ValidationException;
+use Utils\Validation;
+use Utils\Exception\ValidationException;
 
 class AdminController extends Controller
 {
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        session_start();
     }
 
-    public function connexionVue(){
-        $this->render("Connexion");
-    }
+
 
     public function post()
     {
@@ -32,40 +29,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function connexion()
-    {
-        try{
-            $username = $_POST["username"] ?? "";
-            $password = $_POST["password"] ?? "";
 
-            Validation::require($username);
-            Validation::maxChar($username,255);
-            Validation::require($password);
-            Validation::maxChar($password,255);
-
-
-
-            $password = password_hash($password, PASSWORD_DEFAULT);
-            $em_user = $this->em->getRepository(User::class);
-            $user = $em_user->findOneBy(["username"=>$username]);
-            if($user != NULL){
-                if($password === $user->getPassword()){
-                    // create session and redirection
-                }else{
-                    throw new Exception("Invalid password");
-                }
-            }else{
-                throw new Exception("Invalid username");
-            }
-        }catch (Exception $e){
-            $this->errors[] = "Invalid password or username";
-        } finally {
-            $this->render("",[
-
-            ]);
-        }
-
-    }
 
     public function insertPost()
     {
@@ -94,6 +58,11 @@ class AdminController extends Controller
         }
 
         $this->redirect("/post");
+    }
+
+    public function logout(){
+        session_destroy();
+        header("Location: /");
     }
 
     public function deletePost($id)

@@ -1,8 +1,14 @@
 {% extends "template.twig" %}
 
 {% block content %}
+    <div>
+        {% if cookie.errors.InvalidLogin %}
+            Error
+        {% endif %}
+    </div>
     <form action="/loginP" method="post">
         <input type="text" name="username">
         <input type="password" name="password">
+        <input type="submit">
     </form>
 {% endblock %}
