@@ -12,8 +12,8 @@ Route::create("/",[UserController::class,"home"]);
 Route::create("/blog",[UserController::class,"blog"]);
 Route::create("/blog/{id}",[UserController::class,"showBlog"]);
 Route::create("/contact",[UserController::class,"contact"]);
-Route::create("/login",[UserController::class,"connexionVue"]);
-Route::create("/loginP",[UserController::class,"connexion"]);
+Route::create("/login",[UserController::class,"loginVue"]);
+Route::create("/loginP",[UserController::class,"login"]);
 Route::create("/error404",[ErrorController::class,"error404"]);
 
 

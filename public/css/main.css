@@ -8,7 +8,7 @@ Main css
     --primary : #98c1d9;
     --primary-light: #e0fbfc;
     --primary-dark: #3d5a80;
-    --secondary: #ee6c4d;
+    /*--secondary: #ee6c4d;*/
 
     --background : white;
 
@@ -27,7 +27,7 @@ Main css
     --primary : #293241;
     --primary-light: #3d5a80;
     --primary-dark: black;
-    --secondary: #ee6c4d;
+    /*--secondary: #ee6c4d;*/
 
     --background: var(--primary-light);
 
@@ -61,7 +61,7 @@ textarea,label,input,i,p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
     padding: 0;
     margin: 0;
 }
-input[type="text"],input[type="email"], textarea{
+input:not([type="submit"]), textarea{
     border: none;
     background-color: var(--background);
     box-shadow:
@@ -70,9 +70,10 @@ input[type="text"],input[type="email"], textarea{
     border-radius: 4px;
 }
 
-[data-theme="dark"] input[type="text"],input[type="email"], textarea{
-    background-color: white;
+[data-theme="dark"] input:not([type="submit"]),[data-theme="dark"] textarea{
+    background-color: var(--primary);
 }
+
 label, input[type="submit"]{
     font-weight: bold;
 }

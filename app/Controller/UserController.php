@@ -95,7 +95,7 @@ class UserController extends Controller
         $this->render('Contact');
     }
 
-    public function connexion()
+    public function login()
     {
         try{
             $username = $_POST["username"] ?? "";
@@ -126,7 +126,7 @@ class UserController extends Controller
 
     }
 
-    public function connexionVue(){
-        $this->render("Connexion");
+    public function loginVue(){
+        $this->render("Login");
     }
 }
