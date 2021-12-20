@@ -62,6 +62,7 @@ textarea,label,input,i,p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
     margin: 0;
 }
 input:not([type="submit"]), textarea{
+    min-height: 30px;
     border: none;
     background-color: var(--background);
     box-shadow:
