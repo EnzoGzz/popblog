@@ -1,0 +1,25 @@
+{% extends "template.twig" %}
+
+{% block content %}
+    <div id="posts">
+        <div>
+            <h2>{{ post.title }}</h2>
+            <p>
+                {{ post.description }}
+            </p>
+        </div>
+    </div>
+
+    <p>test</p>
+    <h1>Inserer un commentaire</h1>
+    <form action="/blog/{{ post.id }}/comment/insert" method="POST">
+        <input type="text" name="username"/>
+        <textarea name="commentaire"></textarea>
+        <input type="submit">
+    </form>
+    <h2>Commentaire</h2>
+    {% for comment in comments %}
+        <h6>{{ comment.username }}</h6>
+        <p>{{ comment.comment }}</p>
+    {% endfor %}
+{% endblock %}

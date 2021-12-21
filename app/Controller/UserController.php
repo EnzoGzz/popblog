@@ -20,7 +20,7 @@ class UserController extends Controller
         $this->render('Home');
     }
 
-    public function blog()
+    public function post()
     {
         $em_post = $this->em->getRepository(Post::class);
         $posts = $em_post->findAll();
@@ -29,7 +29,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function showBlog(int $id)
+    public function showPost(int $id)
     {
         try{
             Validation::int($id);

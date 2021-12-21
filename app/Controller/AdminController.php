@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Model\Post;
-use App\Model\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Exception;
 use Utils\Validation;
 use Utils\Exception\ValidationException;
 
@@ -19,12 +17,11 @@ class AdminController extends Controller
     }
 
 
-
     public function post()
     {
         $em_post = $this->em->getRepository(Post::class);
         $posts = $em_post->findAll();
-        $this->render('ListPost',[
+        $this->render('BlogAdmin',[
             "posts" => $posts
         ]);
     }

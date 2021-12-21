@@ -1,0 +1,27 @@
+{% extends "template.twig" %}
+
+{% block style %}
+    <link rel="stylesheet" href="/public/css/blog.css">
+{% endblock %}
+
+{% block content %}
+
+    <div class="hero">
+        <div class="hero__title">
+            <i class="far fa-bookmark"></i>
+            <h1>Blogs</h1>
+        </div>
+        <hr>
+        <div id="posts">
+            {% for post in posts %}
+                <div class="post__card">
+                    <h3><a href="/adminBlog/{{ post.id }}">{{ post.title }}</a></h3>
+                    <hr>
+                    <p>{{ post.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -26,6 +26,7 @@ abstract class Controller
     protected function render(string $name, array $args = [])
     {
         try{
+            setcookie('errors', json_encode($this->errors), time() + 120);
             echo $this->twig->render("$name.twig",$args);
         }catch (Exception $e) {
             echo $e->getMessage();
@@ -35,11 +36,6 @@ abstract class Controller
     protected function redirect(string $url)
     {
         header("Location: ".$url);
-    }
-
-    public function __destruct()
-    {
-        setcookie('errors', json_encode($this->errors), time() + 120);
     }
 
 }

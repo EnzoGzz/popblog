@@ -27,8 +27,12 @@
             <ul id="menu__list">
                 <li><a href="/"><img id="menu__logo" src="/public/assets/logo.png" alt="logo" width="50px"></a></li>
                 <li><a href="/">Home</a></li>
-                <li><a href="blog">Blog</a></li>
-                <li><a href="contact">Contact us</a></li>
+                {% if session.login %}
+                    <li><a href="/adminBlog">Blog</a></li>
+                {% else %}
+                    <li><a href="/blog">Blog</a></li>
+                {% endif %}
+                <li><a href="/contact">Contact us</a></li>
             </ul>
         </nav>
     </header>
