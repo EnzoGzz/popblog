@@ -8,4 +8,4 @@ require_once __DIR__ . "/bootstrap.php";
 
 
 session_start();
-Router::setup($entityManager);
+new Router();

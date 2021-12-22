@@ -11,10 +11,6 @@ use Utils\Exception\ValidationException;
 
 class AdminController extends Controller
 {
-    public function __construct(EntityManager $em)
-    {
-        parent::__construct($em);
-    }
 
 
     public function post()

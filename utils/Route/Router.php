@@ -2,68 +2,49 @@
 
 namespace Utils\Route;
 
-use Doctrine\ORM\EntityManager;
-use Error;
 use Exception;
 
 class Router
 {
-    /**
-     * @var array
-     */
     private static array $routes = [];
-    private static $_instance = null;
 
-    private function __construct($em){
+    public function __construct()
+    {
         try{
             require_once "routes.php";
-            $path = $_SERVER['REQUEST_URI'];
-            $route = self::matchFromPath(new Path($path));
-
-            $controllerName = $route->getControllerName();
-            $methodName = $route->getMethodName();
-            $args = $route->getArgs();
-            $controller = new $controllerName($em);
+            $method = $_SERVER["REQUEST_METHOD"];
+            $path = new Path($_SERVER["REQUEST_URI"]);
+            $route = $this->getRouteMatch($path,$method);
+            $controller = $route->getController();
+            $method = $route->getMethod();
+            $parameters = $route->getVariables();
+            $controller = new $controller();
             if (!is_callable($controller)) {
-                $controller =  [$controller, $methodName];
+                $controller =  [$controller, $method];
             }
-            $controller(...array_values($args));
-        }catch(Exception | Error $e){
+            $controller(...array_values($parameters));
+
+        }catch (Exception $e){
             echo $e->getMessage();
-            header("HTTP/1.1 404 Not Found");
         }
     }
 
-    /**
-     * @param Route $route
-     */
-    public static function add(Route $route){
+    public static function add(Route $route)
+    {
         self::$routes[] = $route;
     }
 
     /**
-     * @param Path $path
-     * @return Route
      * @throws Exception
      */
-    public static function matchFromPath(Path $path):Route
+    private function getRouteMatch(Path $path, $method):Route
     {
-        foreach(self::$routes as $route)
+        foreach (self::$routes as $route)
         {
-            if($route->match($path)){
+            if($route->match($path,$method)){
                 return $route;
             }
         }
-        throw new Exception("No route found");
+        throw new Exception("No route matched");
     }
-
-    public static function setup(EntityManager $em): ?Router
-    {
-        if(is_null(self::$_instance)) {
-            self::$_instance = new Router($em);
-        }
-
-        return self::$_instance;
-    }
-
 }

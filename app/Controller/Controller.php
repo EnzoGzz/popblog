@@ -13,8 +13,9 @@ abstract class Controller
     protected EntityManager $em;
     protected array $errors = [];
 
-    public function __construct(EntityManager $em)
+    public function __construct()
     {
+        global $em;
         $loader = new FilesystemLoader(__DIR__ . '/../../view');
         $this->twig = new Environment($loader);
         $this->twig->addGlobal("session",$_SESSION);

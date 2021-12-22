@@ -17,7 +17,8 @@ $dbParams = array(
 );
 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode,useSimpleAnnotationReader: false);
 try {
-    $entityManager = EntityManager::create($dbParams, $config);
+    global $em;
+    $em = EntityManager::create($dbParams, $config);
 } catch (ORMException $e) {
     header('HTTP/1.0 505 Error Entity Manager');
 }
