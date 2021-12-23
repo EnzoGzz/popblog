@@ -34,7 +34,7 @@ class UserController extends Controller
         try{
             Validation::int($id);
         } catch (ValidationException $e) {
-            //Vue erreur
+            $this->redirect($this->route("404"));
         }
         $em_post = $this->em->getRepository(Post::class);
         $em_comment = $this->em->getRepository(Comment::class);
@@ -46,7 +46,7 @@ class UserController extends Controller
                 'comments' => $comments
             ]);
         }else{
-            //Vue erreur
+            $this->redirect($this->route("404"));
         }
 
     }
@@ -95,7 +95,7 @@ class UserController extends Controller
         $this->render('Contact');
     }
 
-    public function login()
+    public function loginPost()
     {
         try{
             $username = $_POST["username"] ?? "";
@@ -112,7 +112,6 @@ class UserController extends Controller
             if($user != NULL){
                 if(password_verify($password,$user->getPassword())){
                     $_SESSION["login"]="login";
-                    header("Location: /");
                 }else{
                     throw new Exception("Invalid password");
                 }
@@ -121,12 +120,13 @@ class UserController extends Controller
             }
         }catch (Exception $e){
             $this->errors["InvalidLogin"] = "Invalid login";
-            header("Location: /login");
+        } finally {
+            $this->redirect($this->route("Home"));
         }
 
     }
 
-    public function loginVue(){
+    public function login(){
         $this->render("Login");
     }
 }

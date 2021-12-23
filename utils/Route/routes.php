@@ -12,9 +12,9 @@ new Route("/",[UserController::class,"home"],"Home");
 new Route("/blog",[UserController::class,"post"],"Blogs");
 new Route("/blog/{id}",[UserController::class,"showPost"],"Blog");
 new Route("/contact",[UserController::class,"contact"],"Contact");
-new Route("/login",[UserController::class,"loginVue"],"Login");
-new Route("/login",[UserController::class,"login"],"Login",["POST"]);
-//new Route("/error404",[ErrorController::class,"error404"]);
+new Route("/login",[UserController::class,"login"],"Login");
+new Route("/login",[UserController::class,"loginPost"],"LoginPost",["POST"]);
+new Route("/error404",[ErrorController::class,"error404"],"404");
 
 
 if(isset($_SESSION["login"])){

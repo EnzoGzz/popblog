@@ -2,6 +2,7 @@
 
 namespace Utils\Route;
 
+use App\Controller\ErrorController;
 use Exception;
 
 class Router
@@ -25,13 +26,13 @@ class Router
             $controller(...array_values($parameters));
 
         }catch (Exception $e){
-            echo $e->getMessage();
+            (new ErrorController())->error404();
         }
     }
 
     public static function add(Route $route)
     {
-        self::$routes[] = $route;
+        self::$routes[$route->getName()] = $route;
     }
 
     /**
@@ -39,12 +40,17 @@ class Router
      */
     private function getRouteMatch(Path $path, $method):Route
     {
-        foreach (self::$routes as $route)
+        foreach (self::$routes as $key=>$route)
         {
             if($route->match($path,$method)){
                 return $route;
             }
         }
         throw new Exception("No route matched");
+    }
+
+    public static function getByName(string $name)
+    {
+        return self::$routes[$name] ?? null;
     }
 }

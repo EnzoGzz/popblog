@@ -14,7 +14,7 @@ class Route
     public function __construct(string $path,array $params,string $name, array $methods = ["GET"])
     {
         $this->path = new Path($path);
-        $this->path->regexFormatPath();
+        $this->path = $this->path->normalFormatPath();
         $this->controller = $params[0];
         $this->method = $params[1];
         $this->name = $name;
@@ -31,7 +31,8 @@ class Route
 
     public function match(Path $path, string $method):bool
     {
-        $regex = preg_replace("/{[^}]*}/","([^\/]+)",$this->path);
+        $regexPath = $this->path->regexFormatPath();
+        $regex = preg_replace("/{[^}]*}/","([^\/]+)",$regexPath);
         $regex = "/^".$regex."$/";
         if(preg_match_all($regex,$path,$variables) && in_array($method,$this->methodsHTTP)){
             unset($variables[0]);
@@ -66,9 +67,19 @@ class Route
         return $this->variables;
     }
 
-    public function buildPath(array $arguments): Path
+    public function buildPath(array $arguments = []): Path
     {
         $varsName = $this->extractVarsNames();
         return new Path(preg_replace($varsName,$arguments,$this->path));
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+
 }

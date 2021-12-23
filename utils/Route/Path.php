@@ -8,17 +8,17 @@ class Path
 
     public function __construct(string $path)
     {
-        $this->path = $this->formatPath($path);
+        $this->path = $path;
     }
 
-    private function formatPath(string $path): string
+    public function normalFormatPath():Path
     {
-        return "/".rtrim(ltrim(trim($path,"/"),"/"),"/");
+        return new Path("/".rtrim(ltrim(trim($this->path,"/"),"/"),"/"));
     }
 
-    public function regexFormatPath()
+    public function regexFormatPath(): Path
     {
-        $this->path = str_replace("/","\/",$this->path);
+        return new Path(str_replace("/","\/",$this->path));
     }
 
     public function __toString(): string

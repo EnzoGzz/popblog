@@ -22,8 +22,6 @@ class AdminController extends Controller
         ]);
     }
 
-
-
     public function insertPost()
     {
         $title = $_POST['title'] ?? "";
