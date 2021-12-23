@@ -10,7 +10,7 @@ class RouteExtension extends AbstractExtension
     public function route(string $name,array $args = []):?string
     {
         if($route = Router::getByName($name)){
-            return $route->buildPath();
+            return $route->buildPath($args);
         }
         return null;
     }

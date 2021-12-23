@@ -12,7 +12,7 @@
 
     <p>test</p>
     <h1>Inserer un commentaire</h1>
-    <form action="/blog/{{ post.id }}/comment/insert" method="POST">
+    <form action="{{ route("InsertComment",[post.id]) }}" method="POST">
         <input type="text" name="username"/>
         <textarea name="commentaire"></textarea>
         <input type="submit">

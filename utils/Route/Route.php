@@ -36,7 +36,8 @@ class Route
         $regex = "/^".$regex."$/";
         if(preg_match_all($regex,$path,$variables) && in_array($method,$this->methodsHTTP)){
             unset($variables[0]);
-            $this->variables = $variables !== [] ? reset($variables) : [];
+
+            $this->variables = $variables !== [] ? array_merge(...$variables) : [];
             return true;
         }else{
             return false;
@@ -70,6 +71,9 @@ class Route
     public function buildPath(array $arguments = []): Path
     {
         $varsName = $this->extractVarsNames();
+        $varsName = array_map(function($varName){
+            return "/$varName/";
+        }, $varsName);
         return new Path(preg_replace($varsName,$arguments,$this->path));
     }
 

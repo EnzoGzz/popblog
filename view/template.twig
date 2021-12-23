@@ -25,14 +25,14 @@
     <header>
         <nav id="menu">
             <ul id="menu__list">
-                <li><a href="/"><img id="menu__logo" src="/public/assets/logo.png" alt="logo" width="50px"></a></li>
-                <li><a href="/">Home</a></li>
+                <li><a href="{{ route("Home") }}"><img id="menu__logo" src="/public/assets/logo.png" alt="logo" width="50px"></a></li>
+                <li><a href="{{ route("Home") }}">Home</a></li>
                 {% if session.login %}
-                    <li><a href="/adminBlog">Blog</a></li>
+                    <li><a href="{{ route("AdminBlogs") }}">Blog</a></li>
                 {% else %}
-                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="{{ route("Blogs") }}">Blog</a></li>
                 {% endif %}
-                <li><a href="/contact">Contact us</a></li>
+                <li><a href="{{ route("Contact") }}">Contact us</a></li>
             </ul>
         </nav>
     </header>
@@ -55,9 +55,9 @@
             <ul id="footer__list">
                 <li>
                     {% if session.login %}
-                        <a href="/logout">Log out</a>
+                        <a href="{{ route("Logout") }}">Log out</a>
                     {% else %}
-                        <a href="/login">Log in</a>
+                        <a href="{{ route("Login") }}">Log in</a>
                     {% endif %}
                 </li>
                 <li><a href="">Meow</a></li>

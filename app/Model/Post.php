@@ -69,12 +69,14 @@ class Post
     }
 
     /**
-     * @param string $desc
+     * @param string $description
      */
     public function setDescription(string $description): void
     {
         $this->description = $description;
     }
+
+
 
 
 

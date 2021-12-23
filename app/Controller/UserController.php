@@ -58,7 +58,7 @@ class UserController extends Controller
         try{
             Validation::int($id);
         } catch (ValidationException $e) {
-            $this->errors["InvalidBlog"] = "Invalid Blog";
+            $this->redirect($this->route("Blogs"));
         }
 
         $username = $_POST['username'];
@@ -88,7 +88,7 @@ class UserController extends Controller
             $this->errors["Error"] = "Please contact an administrator";
         }
 
-        $this->redirect("/post/$id");
+        $this->redirect($this->route("Blog",[$id]));
     }
 
     public function contact(){

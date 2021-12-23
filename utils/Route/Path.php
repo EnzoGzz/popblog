@@ -21,6 +21,8 @@ class Path
         return new Path(str_replace("/","\/",$this->path));
     }
 
+
+
     public function __toString(): string
     {
         return $this->path;

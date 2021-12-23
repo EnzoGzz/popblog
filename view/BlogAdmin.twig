@@ -15,7 +15,10 @@
         <div id="posts">
             {% for post in posts %}
                 <div class="post__card">
-                    <h3><a href="/adminBlog/{{ post.id }}">{{ post.title }}</a></h3>
+                    <div>
+                        <h3><a href="{{ route("AdminBlog",[post.id]) }}">{{ post.title }}</a></h3>
+                        <a href="{{ route("DeleteBlog",[post.id]) }}">Delete</a>
+                    </div>
                     <hr>
                     <p>{{ post.description }}</p>
                 </div>

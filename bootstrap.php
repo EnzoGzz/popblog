@@ -5,6 +5,7 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
 
 $loader = require_once "vendor/autoload.php";
+require_once "config/config.php";
 
 $paths = array(__DIR__."/app/Model/");
 $isDevMode = false;

@@ -15,13 +15,16 @@ new Route("/contact",[UserController::class,"contact"],"Contact");
 new Route("/login",[UserController::class,"login"],"Login");
 new Route("/login",[UserController::class,"loginPost"],"LoginPost",["POST"]);
 new Route("/error404",[ErrorController::class,"error404"],"404");
+new Route("/blog/{id}/comment/insert",[UserController::class,"insertComment"],"InsertComment",["POST"]);
 
 
 if(isset($_SESSION["login"])){
-    new Route("/blog/{id}/comment/insert",[UserController::class,"insertComment"],"InsertComment");
     new Route("/blog/insert",[AdminController::class,"insertPost"],"InsertBlog");
     new Route("/logout",[AdminController::class,"logout"],"Logout");
     new Route("/adminBlog",[AdminController::class,"post"],"AdminBlogs");
+    new Route("/adminBlog/{id}",[AdminController::class,"showPost"],"AdminBlog");
+    new Route("/adminBlog/{id}/delete",[AdminController::class,"deletePost"],"DeleteBlog");
+    new Route("/adminBlog/{id}/comment/{idComment}/delete",[AdminController::class,"deleteComment"],"DeleteComment");
 }
 
 
