@@ -1,0 +1,29 @@
+#content{
+    box-shadow: var(--smooth-box-shadow);
+}
+
+
+.reviews__list{
+    display: grid;
+    grid-gap: 20px;
+}
+
+.review{
+    border: 2px dashed var(--primary);
+    border-radius: 4px;
+}
+
+.reviews__insert{
+    display: flex;
+    width: 100%;
+}
+
+.reviews__insert > form{
+    width: 100%;
+}
+
+textarea{
+    width: 100%;
+    height: 75px;
+    resize: none;
+}

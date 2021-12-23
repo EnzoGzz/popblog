@@ -53,7 +53,7 @@ body{
     background-color: var(--background);
 }
 
-textarea,label,input,i,p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
+legend,textarea,label,input,i,p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
     color: var(--text-color);
     font-family: 'Nunito', 'Arial', sans-serif;
     text-decoration: none;
@@ -63,6 +63,7 @@ textarea,label,input,i,p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
 }
 input:not([type="submit"]), textarea{
     min-height: 30px;
+    padding: 4px;
     border: none;
     background-color: var(--background);
     box-shadow:

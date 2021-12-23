@@ -1,25 +1,48 @@
 {% extends "template.twig" %}
 
+{% block style %}
+    <link rel="stylesheet" href="/public/css/post.css">
+{% endblock %}
+
 {% block content %}
-    <div id="posts">
+
+    <div id="post">
         <div>
-            <h2>{{ post.title }}</h2>
+            <h1>{{ post.title }}</h1>
             <p>
                 {{ post.description }}
             </p>
         </div>
     </div>
 
-    <p>test</p>
-    <h1>Inserer un commentaire</h1>
-    <form action="{{ route("InsertComment",[post.id]) }}" method="POST">
-        <input type="text" name="username"/>
-        <textarea name="commentaire"></textarea>
-        <input type="submit">
-    </form>
-    <h2>Commentaire</h2>
-    {% for comment in comments %}
-        <h6>{{ comment.username }}</h6>
-        <p>{{ comment.comment }}</p>
-    {% endfor %}
+    <hr>
+
+    <div id="reviews">
+        <h2>Reviews</h2>
+
+        <div class="reviews__insert">
+            <form action="{{ route("InsertComment",[post.id]) }}" method="POST">
+                <input type="text" name="username" placeholder="Username"/>
+                <br>
+                <textarea name="commentaire" placeholder="Type some text here..."></textarea>
+                <input type="submit">
+            </form>
+        </div>
+
+        <br>
+
+        <div class="reviews__list">
+            {% for comment in comments %}
+                <fieldset class="review">
+                    <legend><i class="fas fa-user"></i> {{ comment.username }}</legend>
+                    <p>{{ comment.comment }}</p>
+                </fieldset>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+
 {% endblock %}
