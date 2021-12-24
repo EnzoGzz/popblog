@@ -1,0 +1,37 @@
+:root{
+    --moon : #EAB932;
+    --fullmoon : #FFD039;
+    --rock : #CCCCCC;
+    --rock-dark: #999999;
+    --sand : #FFD039;
+    --sand-dark: #EAB932;
+    --cactus : 	#07A521;
+    --cactus-dark : #0FBC30;
+
+}
+[data-theme="dark"]{
+    --moon: #e5e5e5;
+    --fullmoon : #dcdcdc;
+    --rock : #b093a3;
+    --rock-dark: #806b77;
+    --sand : #787492;
+    --sand-dark: #293241FF;
+    --cactus : 	#293241FF;
+    --cactus-dark : #787492;
+}
+
+#content{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+}
+svg#desert{
+    display: block;
+}
+
+@media screen and (min-width: 1024px){
+    #content{
+        grid-template-columns : 1fr 1fr;
+    }
+}

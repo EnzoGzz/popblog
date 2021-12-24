@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Comment;
+use App\Model\Review;
 use App\Model\Post;
 use App\Model\User;
 use Doctrine\ORM\OptimisticLockException;
@@ -37,13 +37,13 @@ class UserController extends Controller
             $this->redirect($this->route("404"));
         }
         $em_post = $this->em->getRepository(Post::class);
-        $em_comment = $this->em->getRepository(Comment::class);
+        $em_review = $this->em->getRepository(Review::class);
         $post = $em_post->find($id);
         if($post != NULL){
-            $comments = $em_comment->findBy(["post"=>$post->getId()]);
+            $reviews = $em_review->findBy(["post"=>$post->getId()]);
             $this->render('Post', [
                 'post' => $post,
-                'comments' => $comments
+                'reviews' => $reviews
             ]);
         }else{
             $this->redirect($this->route("404"));
@@ -55,6 +55,7 @@ class UserController extends Controller
      * @param int $id
      */
     public function insertComment(int $id){
+
         try{
             Validation::int($id);
         } catch (ValidationException $e) {
@@ -68,16 +69,18 @@ class UserController extends Controller
         } catch (ValidationException $e) {
             $this->errors["InvalidUsername"] = "Invalid username - max 255 characters";
         }
-        $commentText = $_POST['commentaire'];
+
+        $commentText = $_POST['comment'];
         try{
             Validation::require($commentText);
             Validation::maxChar($commentText,2000);
         } catch (ValidationException $e) {
             $this->errors["InvalidComment"] = "Invalid comment - max 255 characters";
         }
+
         $em_post = $this->em->getRepository(Post::class);
 
-        $comment = new Comment();
+        $comment = new Review();
         $comment->setUsername($username);
         $comment->setComment($commentText);
         $comment->setPost($em_post->find($id));

@@ -1,20 +1,50 @@
 {% extends "template.twig" %}
 
+{% block style %}
+    <link rel="stylesheet" href="/public/css/post.css">
+{% endblock %}
+
 {% block content %}
-    <div id="posts">
+
+    <div id="post">
         <div>
-            <h2>{{ post.title }}</h2>
+            <h1>{{ post.title }}</h1>
             <p>
                 {{ post.description }}
             </p>
         </div>
     </div>
-    <h2>Commentaire</h2>
-    {% for comment in comments %}
-        <div>
-            <h6>{{ comment.username }}</h6>
-            <p>{{ comment.comment }}</p>
-            <a href="{{ route("DeleteComment",[post.id,comment.id]) }}">Delete</a>
+
+    <hr>
+
+    <div id="reviews">
+        <h2>Reviews</h2>
+
+        <div class="reviews__insert">
+            <form action="{{ route("InsertComment",[post.id]) }}" method="POST">
+                <input type="text" name="username" placeholder="Username"/>
+                <br>
+                <textarea name="comment" placeholder="Type some text here..."></textarea>
+                <br>
+                <input type="submit">
+            </form>
         </div>
-    {% endfor %}
+
+        <br>
+
+        <div class="reviews__list">
+            {% for review in reviews %}
+                <fieldset class="review">
+                    <legend><i class="fas fa-user"></i> {{ review.username }}</legend>
+                    <p>{{ review.comment }}</p>
+                    <a href="{{ route("DeleteComment",[post.id,comment.id]) }}">Delete</a>
+                </fieldset>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+
 {% endblock %}

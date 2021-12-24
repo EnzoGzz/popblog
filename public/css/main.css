@@ -61,6 +61,10 @@ legend,textarea,label,input,i,p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
     padding: 0;
     margin: 0;
 }
+p a{
+    color: var(--primary);
+    text-decoration: underline;
+}
 input:not([type="submit"]), textarea{
     min-height: 30px;
     padding: 4px;

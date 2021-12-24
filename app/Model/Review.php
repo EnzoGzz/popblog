@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Comment")
+ * @ORM\Table(name="Review")
  */
-class Comment
+class Review
 {
     /**
      * @ORM\Id
@@ -97,6 +97,5 @@ class Comment
     {
         $this->post = $post;
     }
-
 
 }

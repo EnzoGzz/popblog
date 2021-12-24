@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Comment;
+use App\Model\Review;
 use App\Model\Post;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -63,7 +63,7 @@ class AdminController extends Controller
         try{
             Validation::int($id);
             $em_post = $this->em->getRepository(Post::class);
-            $em_comment = $this->em->getRepository(Comment::class);
+            $em_comment = $this->em->getRepository(Review::class);
             $post = $em_post->find($id);
             $comments = $em_comment->findBy(["post"=>$post]);
             foreach ($comments as $comment) {
@@ -86,13 +86,13 @@ class AdminController extends Controller
             $this->redirect($this->route("404"));
         }
         $em_post = $this->em->getRepository(Post::class);
-        $em_comment = $this->em->getRepository(Comment::class);
+        $em_comment = $this->em->getRepository(Review::class);
         $post = $em_post->find($id);
         if($post != NULL){
-            $comments = $em_comment->findBy(["post"=>$post->getId()]);
+            $reviews = $em_comment->findBy(["post"=>$post->getId()]);
             $this->render('PostAdmin', [
                 'post' => $post,
-                'comments' => $comments
+                'reviews' => $reviews
             ]);
         }else{
             $this->redirect($this->route("404"));
@@ -104,7 +104,7 @@ class AdminController extends Controller
         try{
             Validation::int($idComment);
             Validation::int($idPost);
-            $em_comment = $this->em->getRepository(Comment::class);
+            $em_comment = $this->em->getRepository(Review::class);
             $em_post = $this->em->getRepository(Post::class);
             $post = $em_post->find($idPost);
             $comment = $em_comment->find($idComment);
