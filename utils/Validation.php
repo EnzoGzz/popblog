@@ -27,7 +27,8 @@ class Validation
      * @param $var
      * @return mixed
      */
-    public static function string($var){
+    public static function string($var): mixed
+    {
         return filter_var($var, FILTER_SANITIZE_STRING);
     }
 
@@ -53,7 +54,7 @@ class Validation
      * @throws ValidationException
      */
     public static function max($var,$max){
-        if($var > $max) throw new ValidationException("$var est supérieur à $max");
+        if($var > $max)throw new ValidationException("$var est supérieur à $max");
     }
 
     /**
@@ -62,7 +63,7 @@ class Validation
      * @throws ValidationException
      */
     public static function min($var,$min){
-        if($var < $min) throw new ValidationException("$var est inférieur à $min");
+        if($var < $min)throw new ValidationException("$var est inférieur à $min");
     }
 
     /**

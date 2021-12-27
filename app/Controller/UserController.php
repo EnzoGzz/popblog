@@ -61,38 +61,44 @@ class UserController extends Controller
             Validation::int($id);
         } catch (ValidationException $e) {
             $this->redirect($this->route("Blogs"));
+            return;
         }
-
-        $username = $_POST['username'];
         try{
-            Validation::require($username);
-            Validation::maxChar($username,255);
-        } catch (ValidationException $e) {
-            $this->errors["InvalidUsername"] = "Invalid username - max 255 characters";
+            $username = $_POST['username'];
+            try{
+                Validation::require($username);
+                Validation::maxChar($username,255);
+            } catch (ValidationException $e) {
+                $this->errors["InvalidUsername"] = "Invalid username - max 255 characters";
+                throw $e;
+            }
+
+            $commentText = $_POST['comment'];
+            try{
+                Validation::require($commentText);
+                Validation::maxChar($commentText,2000);
+            } catch (ValidationException $e) {
+                $this->errors["InvalidComment"] = "Invalid comment - max 255 characters";
+                throw $e;
+            }
+
+            try{
+                $em_post = $this->em->getRepository(Post::class);
+
+                $comment = new Review();
+                $comment->setUsername($username);
+                $comment->setComment($commentText);
+                $comment->setPost($em_post->find($id));
+                $this->em->persist($comment);
+                $this->em->flush();
+            }catch (OptimisticLockException | ORMException $e) {
+                $this->errors["Error"] = "Please contact an administrator";
+            }
+        }catch (Exception $e){
+
+        } finally {
+            $this->redirect($this->route("Blog",[$id]));
         }
-
-        $commentText = $_POST['comment'];
-        try{
-            Validation::require($commentText);
-            Validation::maxChar($commentText,2000);
-        } catch (ValidationException $e) {
-            $this->errors["InvalidComment"] = "Invalid comment - max 255 characters";
-        }
-
-        $em_post = $this->em->getRepository(Post::class);
-
-        $comment = new Review();
-        $comment->setUsername($username);
-        $comment->setComment($commentText);
-        $comment->setPost($em_post->find($id));
-        try{
-            $this->em->persist($comment);
-            $this->em->flush();
-        }catch (OptimisticLockException | ORMException $e) {
-            $this->errors["Error"] = "Please contact an administrator";
-        }
-
-        $this->redirect($this->route("Blog",[$id]));
     }
 
     public function contact(){

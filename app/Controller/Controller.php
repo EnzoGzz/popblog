@@ -43,7 +43,7 @@ abstract class Controller
         return $this->re->route($name,$args);
     }
 
-    protected function redirect(string $url)
+    protected function redirect(string $url):void
     {
         header("Location: ".$url);
     }

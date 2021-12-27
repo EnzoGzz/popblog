@@ -27,31 +27,39 @@ class AdminController extends Controller
 
     public function insertPost()
     {
-        $title = $_POST['title'] ?? "";
-        try {
-            Validation::require($title);
-            Validation::maxChar($title, 255);
-        } catch (ValidationException $e) {
+        try{
+            $title = $_POST['title'] ?? "";
+            try {
+                Validation::require($title);
+                Validation::maxChar($title, 255);
+            } catch (ValidationException $e) {
+                $this->errors["InvalidTitle"] = "Invalid title - max 255 characters";
+                throw $e;
+            }
+            $desc = $_POST['description'] ?? "";
+            try {
+                Validation::require($desc);
+                Validation::maxChar($desc, 2000);
+            } catch (ValidationException $e) {
+                $this->errors["InvalidDescription"] = "Invalid description - max 2000 characters";
+                throw $e;
+            }
+
+            try {
+                $post = new Post();
+                $post->setTitle($title);
+                $post->setDescription($desc);
+                $this->em->persist($post);
+                $this->em->flush();
+            } catch (Exception $e) {
+                $this->errors["Error"] = "Please contact an administrator";
+            }
+        }catch (Exception $e){
 
         }
-        $desc = $_POST['description'] ?? "";
-        try {
-            Validation::require($desc);
-            Validation::maxChar($desc, 2000);
-        } catch (ValidationException $e) {
-
+        finally {
+            $this->redirect($this->route("Blogs"));
         }
-
-        $post = new Post();
-        $post->setTitle($title);
-        $post->setDescription($desc);
-        try {
-            $this->em->persist($post);
-            $this->em->flush();
-        } catch (OptimisticLockException | ORMException $e) {
-        }
-
-        $this->redirect("/post");
     }
 
     public function showContact()
@@ -83,7 +91,6 @@ class AdminController extends Controller
             $this->em->flush();
             $this->redirect($this->route("AdminBlogs"));
         }catch (Exception $e) {
-            echo $e->getMessage();
             $this->redirect($this->route("error404"));
         }
     }
@@ -139,16 +146,23 @@ class AdminController extends Controller
         }
     }
 
-    public function updatePostPost(int $idPost){
+    public function updatePostPost(int $idPost):void
+    {
         try{
             Validation::int($idPost);
+        }catch (ValidationException $e){
+            $this->redirect($this->route("404"));
+            return;
+        }
 
+        try{
             $title = $_POST['title'] ?? "";
             try {
                 Validation::require($title);
                 Validation::maxChar($title, 255);
             } catch (ValidationException $e) {
                 $this->errors["InvalidTitle"] = "Invalid title - max 255 characters";
+                throw $e;
             }
             $description = $_POST['description'] ?? "";
             try {
@@ -156,19 +170,22 @@ class AdminController extends Controller
                 Validation::maxChar($description, 2000);
             } catch (ValidationException $e) {
                 $this->errors["InvalidDescription"] = "Invalid description - max 2000 characters";
+                throw $e;
             }
 
-            $em_post = $this->em->getRepository(Post::class);
-            $post = $em_post->find($idPost);
-            $post->setTitle($title);
-            $post->setDescription($description);
-
-            $this->em->flush();
-
-
+            try{
+                $em_post = $this->em->getRepository(Post::class);
+                $post = $em_post->find($idPost);
+                $post->setTitle($title);
+                $post->setDescription($description);
+                $this->em->flush();
+            }catch (Exception $e){
+                $this->errors["Error"] = "Please contact an administrator";
+            }
+        }catch (Exception $e){
+        } finally {
             $this->redirect($this->route("AdminBlogs"));
-        } catch (Exception $e) {
-            $this->redirect($this->route("404"));
+            return;
         }
     }
 }
