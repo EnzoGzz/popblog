@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Contact;
 use App\Model\Review;
 use App\Model\Post;
 use Doctrine\ORM\EntityManager;
@@ -51,6 +52,15 @@ class AdminController extends Controller
         }
 
         $this->redirect("/post");
+    }
+
+    public function showContact()
+    {
+        $em_post = $this->em->getRepository(Contact::class);
+        $contacts = $em_post->findAll();
+        $this->render('ContactAdmin',[
+            "contacts" => $contacts
+        ]);
     }
 
     public function logout(){

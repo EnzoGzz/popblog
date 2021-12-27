@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    <form id="contact" action="{{ route("") }}" method="POST">
+    <form id="contact" action="{{ route("ContactSend") }}" method="POST">
         <label for="email">Email</label>
         <input type="email" id="email" name="email">
         <br>
-        <label for="email">Subject</label>
-        <input type="text" id="email" name="email">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject">
         <br>
         <label for="content">Message</label>
         <textarea name="message" id="message" cols="30" rows="10"></textarea>

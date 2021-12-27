@@ -1,0 +1,13 @@
+{% extends "template.twig" %}
+
+{% block style %}
+    <link rel="stylesheet" href="/public/css/contact.css">
+{% endblock %}
+
+{% block content %}
+    {% for contact in contacts %}
+        <p>{{ contact.email }}</p>
+        <p>{{ contact.subject }}</p>
+        <p>{{ contact.message }}</p>
+    {% endfor %}
+{% endblock %}

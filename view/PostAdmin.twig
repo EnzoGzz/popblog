@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block content %}
+    <div id="admin">
+        <h1>Manage</h1>
+        <p><i class="fas fa-edit"></i> <a href="">Edit</a></p>
+        <p><i class="fas fa-trash-alt"></i> <a href="{{ route("DeleteBlog",[post.id]) }}">Delete</a></p>
+    </div>
+
+    <hr>
 
     <div id="post">
         <div>
@@ -47,4 +54,7 @@
     </div>
 
 
+{% endblock %}
+
+{% block js %}
 {% endblock %}

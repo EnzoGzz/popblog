@@ -14,5 +14,10 @@
             "App\\": "app/",
             "Utils\\": "utils/"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     }
 }

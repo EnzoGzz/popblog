@@ -29,10 +29,11 @@
                 <li><a href="{{ route("Home") }}">Home</a></li>
                 {% if session.login %}
                     <li><a href="{{ route("AdminBlogs") }}">Blog</a></li>
+                    <li><a href="{{ route("AdminContact") }}">Contact us</a></li>
                 {% else %}
                     <li><a href="{{ route("Blogs") }}">Blog</a></li>
+                    <li><a href="{{ route("Contact") }}">Contact us</a></li>
                 {% endif %}
-                <li><a href="{{ route("Contact") }}">Contact us</a></li>
             </ul>
         </nav>
     </header>
@@ -96,5 +97,8 @@
 
     toggleSwitch.addEventListener('change', switchTheme, false);
 </script>
+
+{% block js %}
+{% endblock %}
 
 </html>

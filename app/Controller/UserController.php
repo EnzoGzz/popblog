@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Contact;
 use App\Model\Review;
 use App\Model\Post;
 use App\Model\User;
@@ -96,6 +97,44 @@ class UserController extends Controller
 
     public function contact(){
         $this->render('Contact');
+    }
+
+    public function contactSend(){
+
+        $email = $_POST["email"];
+        try{
+            Validation::require($email);
+        }catch (ValidationException $e){
+            $this->errors["InvalidEmail"] = "Invalid email";
+        }
+
+        $subject = $_POST["subject"];
+        try{
+            Validation::require($subject);
+        }catch (ValidationException $e){
+            $this->errors["InvalidSubject"] = "Invalid subject";
+        }
+
+        $message = $_POST["message"];
+        try{
+            Validation::require($message);
+        }catch (ValidationException $e){
+            $this->errors["InvalidMessage"] = "Invalid message";
+        }
+
+        $contact = new Contact();
+        $contact->setEmail($email);
+        $contact->setSubject($subject);
+        $contact->setMessage($message);
+        try{
+            $this->em->persist($contact);
+            $this->em->flush();
+        }catch (OptimisticLockException | ORMException $e) {
+            $this->errors["Error"] = "Please contact an administrator";
+        }
+
+        $this->redirect($this->route("Contact"));
+
     }
 
     public function loginPost()
