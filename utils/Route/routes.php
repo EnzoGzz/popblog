@@ -4,6 +4,7 @@
 use App\Controller\AdminController;
 use App\Controller\ErrorController;
 use App\Controller\UserController;
+use Utils\ModelAdmin;
 use Utils\Route\Route;
 
 
@@ -19,7 +20,7 @@ new Route("/error404",[ErrorController::class,"error404"],"404");
 new Route("/blog/{id}/comment/insert",[UserController::class,"insertComment"],"InsertComment",["POST"]);
 
 
-if(isset($_SESSION["login"])){
+if(ModelAdmin::isLogin()){
     new Route("/blog/insert",[AdminController::class,"insertPost"],"InsertBlog");
     new Route("/logout",[AdminController::class,"logout"],"Logout");
     new Route("/adminBlog",[AdminController::class,"post"],"AdminBlogs");
@@ -27,6 +28,7 @@ if(isset($_SESSION["login"])){
     new Route("/adminBlog/{id}/delete",[AdminController::class,"deletePost"],"DeleteBlog");
     new Route("/adminBlog/{id}/comment/{idComment}/delete",[AdminController::class,"deleteComment"],"DeleteComment");
     new Route("/adminContact",[AdminController::class,"showContact"],"AdminContact");
+    new Route("/adminBlog/{id}/update",[AdminController::class,"updatePost"],"UpdatePost",["POST"]);
 }
 
 

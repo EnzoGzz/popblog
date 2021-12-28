@@ -15,9 +15,11 @@
         <div id="posts">
             {% for post in posts %}
                 <div class="post__card">
-                    <h3><a href="{{ route("Blog",[post.id])}}">{{ post.title }}</a></h3>
+                    {% apply markdown_to_html %}
+                        <a href="{{ route("Blog",[post.id])}}">{{ post.title }}</a>
                     <hr>
-                    <p>{{ post.description }}</p>
+                        {{ post.description }}
+                    {% endapply %}
                 </div>
             {% endfor %}
         </div>

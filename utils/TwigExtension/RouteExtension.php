@@ -1,13 +1,14 @@
 <?php
 
-namespace Utils\Route;
+namespace Utils\TwigExtension;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Utils\Route\Router;
 
 class RouteExtension extends AbstractExtension
 {
-    public function route(string $name,array $args = []):?string
+    public static function route(string $name,array $args = []):?string
     {
         if($route = Router::getByName($name)){
             return $route->buildPath($args);
@@ -18,9 +19,7 @@ class RouteExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return[
-            new TwigFunction("route",function ($name,$args = []){
-                echo $this->route($name,$args);
-            })
+            new TwigFunction("route",[self::class,"route"])
         ];
     }
 }

@@ -3,3 +3,12 @@
         <h3>{{ error }}</h3>
     </div>
 {% endfor %}
+
+{% set errors = errors() %}
+{% if has(errors) %}
+    {% for error in errors %}
+        <div class="error">
+            <h3>{{ error }}</h3>
+        </div>
+    {% endfor %}
+{% endif %}

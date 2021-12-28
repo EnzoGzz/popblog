@@ -12,15 +12,14 @@
     </div>
 
     <hr>
-
-    <div id="post">
+    {% include "Error.twig" %}
+    <form id="post" method="post" action="{{ route("UpdatePost",[post.id]) }}">
         <div>
-            <h1>{{ post.title }}</h1>
-            <p>
-                {{ post.description }}
-            </p>
+            <input name="title" type="text" value="{{ post.title }}"/>
+            <textarea name="description">{{ post.description }}</textarea>
         </div>
-    </div>
+        <input type="submit">
+    </form>
 
     <hr>
 
@@ -44,7 +43,7 @@
                 <fieldset class="review">
                     <legend><i class="fas fa-user"></i> {{ review.username }}</legend>
                     <p>{{ review.comment }}</p>
-                    <a href="{{ route("DeleteComment",[post.id,comment.id]) }}">Delete</a>
+                    <a href="{{ route("DeleteComment",[post.id,review.id]) }}">Delete</a>
                 </fieldset>
 
             {% endfor %}

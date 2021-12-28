@@ -6,7 +6,9 @@
         "twig/twig": "*",
         "ext-pdo": "*",
         "doctrine/orm": "^2.10",
-        "symfony/cache" :"*"
+        "symfony/cache" :"*",
+        "twig/markdown-extra": "^3.3",
+        "league/commonmark": "^2.1"
     },
     "license": "mit",
     "autoload": {

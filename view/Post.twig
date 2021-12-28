@@ -8,10 +8,10 @@
 
     <div id="post">
         <div>
-            <h1>{{ post.title }}</h1>
-            <p>
+            {% apply markdown_to_html %}
+                {{ post.title }}
                 {{ post.description }}
-            </p>
+            {% endapply %}
         </div>
     </div>
 

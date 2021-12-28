@@ -2,36 +2,59 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Exception;
 use Twig\Environment;
+use Twig\Extra\Markdown\MarkdownExtension;
 use Twig\Loader\FilesystemLoader;
-use Utils\Route\RouteExtension;
+use Utils\Database\DB;
+use Utils\TwigExtension\MessageExtension;
+use Utils\TwigExtension\RouteExtension;
+use Twig\Extra\Markdown\DefaultMarkdown;
+use Twig\Extra\Markdown\MarkdownRuntime;
+use Twig\RuntimeLoader\RuntimeLoaderInterface;
 
 abstract class Controller
 {
     private Environment $twig;
-    protected EntityManager $em;
-    protected array $errors = [];
-    private RouteExtension $re;
+    protected DB $con;
 
     public function __construct()
     {
-        global $em;
+        global $con;
+        $this->con = $con;
         $loader = new FilesystemLoader(__DIR__ . '/../../view');
         $this->twig = new Environment($loader);
+        $this->twigVariables();
+        $this->twigExtensionLoader();
+
+    }
+
+    private function twigVariables(){
         $this->twig->addGlobal("session",$_SESSION);
-        $this->re = new RouteExtension();
-        $this->twig->addExtension($this->re);
-        $_COOKIE["errors"] = json_decode($_COOKIE["errors"] ?? null);
         $this->twig->addGlobal("cookie",$_COOKIE);
-        $this->em = $em;
+    }
+
+    private function twigExtensionLoader(){
+        $this->twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
+            public function load($class): ?MarkdownRuntime
+            {
+                if (MarkdownRuntime::class === $class) {
+                    return new MarkdownRuntime(new DefaultMarkdown());
+                }
+                return null;
+            }
+        });
+        $routeExtension = new RouteExtension();
+        $messageExtension = new MessageExtension();
+        $markdownExtension = new MarkdownExtension();
+        $this->twig->addExtension($routeExtension);
+        $this->twig->addExtension($messageExtension);
+        $this->twig->addExtension($markdownExtension);
     }
 
     protected function render(string $name, array $args = [])
     {
         try{
-            setcookie('errors', json_encode($this->errors), time() + 120);
             echo $this->twig->render("$name.twig",$args);
         }catch (Exception $e) {
             echo $e->getMessage();
@@ -40,11 +63,13 @@ abstract class Controller
 
     protected function route(string $name, array $args = []):string
     {
-        return $this->re->route($name,$args);
+        return RouteExtension::route($name,$args);
     }
 
-    protected function redirect(string $url):void
+    protected function redirect(string $url, string $messages = null, string $errors = null):void
     {
+        if($messages !== null)$_SESSION["messages"][] = $messages;
+        if($errors !== null)$_SESSION["errors"][] = $errors;
         header("Location: ".$url);
     }
 

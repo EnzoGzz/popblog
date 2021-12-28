@@ -9,8 +9,13 @@ use App\Model\User;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Exception;
+use Utils\Database\Gateway\ContactGateway;
+use Utils\Database\Gateway\PostGateway;
+use Utils\Database\Gateway\ReviewGateway;
+use Utils\Database\Gateway\UserGateway;
+use Utils\ModelAdmin;
 use Utils\Validation;
-use Utils\Exception\ValidationException;
+use Utils\Exception\DatabaseException;
 
 class UserController extends Controller
 {
@@ -23,7 +28,7 @@ class UserController extends Controller
 
     public function post()
     {
-        $em_post = $this->em->getRepository(Post::class);
+        $em_post = new PostGateway($this->con);
         $posts = $em_post->findAll();
         $this->render('Blog',[
             "posts" => $posts
@@ -34,14 +39,14 @@ class UserController extends Controller
     {
         try{
             Validation::int($id);
-        } catch (ValidationException $e) {
+        } catch (DatabaseException $e) {
             $this->redirect($this->route("404"));
         }
-        $em_post = $this->em->getRepository(Post::class);
-        $em_review = $this->em->getRepository(Review::class);
+        $em_post = new PostGateway($this->con);
+        $em_review = new ReviewGateway($this->con);
         $post = $em_post->find($id);
         if($post != NULL){
-            $reviews = $em_review->findBy(["post"=>$post->getId()]);
+            $reviews = $em_review->findByPost($post);
             $this->render('Post', [
                 'post' => $post,
                 'reviews' => $reviews
@@ -59,7 +64,7 @@ class UserController extends Controller
 
         try{
             Validation::int($id);
-        } catch (ValidationException $e) {
+        } catch (DatabaseException $e) {
             $this->redirect($this->route("Blogs"));
             return;
         }
@@ -68,7 +73,7 @@ class UserController extends Controller
             try{
                 Validation::require($username);
                 Validation::maxChar($username,255);
-            } catch (ValidationException $e) {
+            } catch (DatabaseException $e) {
                 $this->errors["InvalidUsername"] = "Invalid username - max 255 characters";
                 throw $e;
             }
@@ -77,25 +82,24 @@ class UserController extends Controller
             try{
                 Validation::require($commentText);
                 Validation::maxChar($commentText,2000);
-            } catch (ValidationException $e) {
+            } catch (DatabaseException $e) {
                 $this->errors["InvalidComment"] = "Invalid comment - max 255 characters";
                 throw $e;
             }
 
             try{
-                $em_post = $this->em->getRepository(Post::class);
+                $em_post = new PostGateway($this->con);
+                $em_review = new ReviewGateway($this->con);
 
                 $comment = new Review();
                 $comment->setUsername($username);
                 $comment->setComment($commentText);
-                $comment->setPost($em_post->find($id));
-                $this->em->persist($comment);
-                $this->em->flush();
-            }catch (OptimisticLockException | ORMException $e) {
+                $comment->setPost($em_post->find($id)->getId());
+                $em_review->insert($comment);
+            }catch (Exception $e) {
                 $this->errors["Error"] = "Please contact an administrator";
             }
         }catch (Exception $e){
-
         } finally {
             $this->redirect($this->route("Blog",[$id]));
         }
@@ -107,69 +111,60 @@ class UserController extends Controller
 
     public function contactSend(){
 
-        $email = $_POST["email"];
         try{
-            Validation::require($email);
-        }catch (ValidationException $e){
-            $this->errors["InvalidEmail"] = "Invalid email";
-        }
+            $email = $_POST["email"];
+            try{
+                Validation::require($email);
+            }catch (DatabaseException $e){
+                throw new Exception("Invalid email");
+            }
 
-        $subject = $_POST["subject"];
-        try{
-            Validation::require($subject);
-        }catch (ValidationException $e){
-            $this->errors["InvalidSubject"] = "Invalid subject";
-        }
+            $subject = $_POST["subject"];
+            try{
+                Validation::require($subject);
+            }catch (DatabaseException $e){
+                throw new Exception("Invalid subject");
+            }
 
-        $message = $_POST["message"];
-        try{
-            Validation::require($message);
-        }catch (ValidationException $e){
-            $this->errors["InvalidMessage"] = "Invalid message";
-        }
+            $message = $_POST["message"];
+            try{
+                Validation::require($message);
+            }catch (DatabaseException $e){
+                throw new Exception("Invalid message");
+            }
 
-        $contact = new Contact();
-        $contact->setEmail($email);
-        $contact->setSubject($subject);
-        $contact->setMessage($message);
-        try{
-            $this->em->persist($contact);
-            $this->em->flush();
-        }catch (OptimisticLockException | ORMException $e) {
-            $this->errors["Error"] = "Please contact an administrator";
+            try{
+                $em_contact = new ContactGateway($this->con);
+                $contact = new Contact();
+                $contact->setEmail($email);
+                $contact->setSubject($subject);
+                $contact->setMessage($message);
+                $em_contact->insert($contact);
+            }catch (DatabaseException $e) {
+                throw new Exception("Please contact an administrator");
+            }
+        }catch (Exception $e){
+            $this->redirect($this->route("Contact"),errors:$e->getMessage());
         }
-
         $this->redirect($this->route("Contact"));
 
     }
 
     public function loginPost()
     {
-        try{
+        try {
             $username = $_POST["username"] ?? "";
             $password = $_POST["password"] ?? "";
 
             Validation::require($username);
-            Validation::maxChar($username,255);
+            Validation::maxChar($username, 255);
             Validation::require($password);
-            Validation::maxChar($password,255);
-
-
-            $em_user = $this->em->getRepository(User::class);
-            $user = $em_user->findOneBy(["username"=>$username]);
-            if($user != NULL){
-                if(password_verify($password,$user->getPassword())){
-                    $_SESSION["login"]="login";
-                }else{
-                    throw new Exception("Invalid password");
-                }
-            }else{
-                throw new Exception("Invalid username");
-            }
-        }catch (Exception $e){
-            $this->errors["InvalidLogin"] = "Invalid login";
-        } finally {
+            Validation::maxChar($password, 255);
+            ModelAdmin::login($username,$password);
             $this->redirect($this->route("Home"));
+
+        }catch (Exception $e){
+            $this->redirect($this->route("Login"), errors:"Invalid login");
         }
 
     }
