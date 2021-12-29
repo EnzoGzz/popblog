@@ -96,13 +96,14 @@ class AdminController extends Controller
         $this->redirect($this->route("Home"));
     }
 
-    public function deletePost($id)
+    public function deletePost(int $id)
     {
         try{
             Validation::int($id);
             $em_post = new PostGateway($this->con);
             $em_comment = new ReviewGateway($this->con);
             $post = $em_post->find($id);
+            if($post === null) throw new Exception("Heu beug");
             $comments = $em_comment->findByPost($post);
             foreach ($comments as $comment) {
                 $em_comment->remove($comment);
@@ -110,7 +111,7 @@ class AdminController extends Controller
             $em_post->remove($post);
             $this->redirect($this->route("AdminBlogs"));
         }catch (Exception $e) {
-            $this->redirect($this->route("error404"));
+            $this->redirect($this->route("404"));
         }
     }
 

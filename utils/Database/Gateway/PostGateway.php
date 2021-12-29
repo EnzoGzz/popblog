@@ -49,7 +49,7 @@ class PostGateway extends Gateway
     }
 
     public function remove(Post $post){
-        $query = "delete from Post where :id";
+        $query = "delete from Post where id=:id";
         $this->con->executeQuery($query,[
             ":id"=>[$post->getId(),PDO::PARAM_INT]
         ]);

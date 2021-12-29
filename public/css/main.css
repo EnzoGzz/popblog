@@ -74,7 +74,6 @@ legend{
     font-weight: bold;
 }
 p a{
-    color: var(--primary);
     text-decoration: underline;
 }
 input:not([type="submit"],[type="checkbox"]), textarea{
@@ -173,10 +172,4 @@ section#footer{
 }
 .hero__title > i{
     padding-right: 4px;
-}
-
-.hidden{
-    visibility: hidden;
-    height: 0;
-    width: 0;
 }

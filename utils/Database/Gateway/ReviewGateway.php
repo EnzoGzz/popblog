@@ -61,7 +61,7 @@ class ReviewGateway extends Gateway
     }
 
     public function remove(Review $review){
-        $query = "delete from Review where :id";
+        $query = "delete from Review where id=:id";
         $this->con->executeQuery($query,[
             ":id"=>[$review->getId(),PDO::PARAM_INT]
         ]);
