@@ -1,7 +1,8 @@
-#content{
-    box-shadow: var(--smooth-box-shadow);
+#post{
+    border-left: 6px solid var(--primary);
+    padding: 16px 0 16px 32px;
+    background-color: rgba(0,0,0,0.03);
 }
-
 
 .reviews__list{
     display: grid;

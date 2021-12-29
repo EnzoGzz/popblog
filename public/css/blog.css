@@ -2,14 +2,30 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
     grid-gap: 32px;
+
 }
 .post__card{
     padding: 16px;
+    height: 200px;
+    overflow: hidden;
 
     background-color: var(--background);
 
     box-shadow: var(--smooth-box-shadow);
     border-radius: var(--border-radius);
+
+    cursor: pointer;
+
+    transition:
+            margin .5s ease,
+            box-shadow .5s ease;
+}
+.post__card:hover{
+    margin-top: -8px;
+    box-shadow: var(--smooth-box-shadow),var(--smooth-box-shadow);
+
+
+
 }
 [data-theme="dark"] .post__card{
     background-color: var(--primary);

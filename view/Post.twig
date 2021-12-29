@@ -6,8 +6,13 @@
 
 {% block content %}
 
-    <div id="post">
-        <div>
+    <div class="hero">
+        <div class="hero__title">
+            <i class="far fa-bookmark"></i>
+            <h1>{{ post.title }}</h1>
+        </div>
+        <hr>
+        <div id="post">
             {% apply markdown_to_html %}
                 {{ post.title }}
                 {{ post.description }}
@@ -15,11 +20,12 @@
         </div>
     </div>
 
-    <hr>
-
-    <div id="reviews">
-        <h2>Reviews</h2>
-
+    <div class="hero">
+        <div class="hero__title">
+            <i class="far fa-bookmark"></i>
+            <h1>Reviews</h1>
+        </div>
+        <hr>
         <div class="reviews__insert">
             <form action="{{ route("InsertComment",[post.id]) }}" method="POST">
                 <input type="text" name="username" placeholder="Username"/>
@@ -41,9 +47,9 @@
 
             {% endfor %}
         </div>
-
-
     </div>
+
+
 
 
 {% endblock %}

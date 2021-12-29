@@ -6,6 +6,17 @@
 
 {% block content %}
 
+    {% include "Error.twig" %}
+
+    <div class="hero">
+        <div class="hero__title">
+            <i class="far fa-bookmark"></i>
+            <h1>Manage</h1>
+        </div>
+        <hr>
+        <p><i class="fas fa-plus-circle"></i> <a href="{{ route("CreatePost") }}">Add</a></p>
+    </div>
+
     <div class="hero">
         <div class="hero__title">
             <i class="far fa-bookmark"></i>
@@ -14,13 +25,8 @@
         <hr>
         <div id="posts">
             {% for post in posts %}
-                <div class="post__card">
-                    <div>
-                        {% apply markdown_to_html %}
-                            <a href="{{ route("AdminBlog",[post.id]) }}">{{ post.title }}</a>
-                        {% endapply %}
-
-                    </div>
+                <div class="post__card" onclick="window.location.href = '{{ route("AdminBlog",[post.id]) }}'">
+                    <h2>{{ post.title }}</h2>
                     <hr>
                     {% apply markdown_to_html %}
                         {{ post.description }}

@@ -5,27 +5,59 @@
 {% endblock %}
 
 {% block content %}
-    <div id="admin">
-        <h1>Manage</h1>
-        <p><i class="fas fa-edit"></i> <a href="">Edit</a></p>
+    <div class="hero">
+        <div class="hero__title">
+            <i class="far fa-bookmark"></i>
+            <h1>Manage</h1>
+        </div>
+        <hr>
+        <label for="edit"><i class="fas fa-edit"></i>Edit mode</label>
+        <input type="checkbox" id="edit" name="edit"/>
         <p><i class="fas fa-trash-alt"></i> <a href="{{ route("DeleteBlog",[post.id]) }}">Delete</a></p>
     </div>
 
-    <hr>
-    {% include "Error.twig" %}
-    <form id="post" method="post" action="{{ route("UpdatePost",[post.id]) }}">
-        <div>
-            <input name="title" type="text" value="{{ post.title }}"/>
-            <textarea name="description">{{ post.description }}</textarea>
+
+    <div class="hero">
+        <div class="hero__title">
+            <i class="far fa-bookmark"></i>
+            <h1>{{ post.title }}</h1>
         </div>
-        <input type="submit">
-    </form>
+        <hr>
 
-    <hr>
+        {% include "Error.twig" %}
 
-    <div id="reviews">
-        <h2>Reviews</h2>
+        <div id="post">
 
+            <div id="post__normal">
+
+                {% apply markdown_to_html %}
+                    {{ post.title }}
+
+                    {{ post.description }}
+                {% endapply %}
+
+            </div>
+
+            <form style="display: none" id="post__admin" method="post" action="{{ route("UpdatePost",[post.id]) }}">
+                <div>
+                    <input name="title" type="text" value="{{ post.title }}"/>
+                    <textarea name="description">{{ post.description }}</textarea>
+                </div>
+                <input type="submit">
+            </form>
+
+        </div>
+
+
+
+    </div>
+
+    <div class="hero">
+        <div class="hero__title">
+            <i class="far fa-bookmark"></i>
+            <h1>Reviews</h1>
+        </div>
+        <hr>
         <div class="reviews__insert">
             <form action="{{ route("InsertComment",[post.id]) }}" method="POST">
                 <input type="text" name="username" placeholder="Username"/>
@@ -35,8 +67,6 @@
                 <input type="submit">
             </form>
         </div>
-
-        <br>
 
         <div class="reviews__list">
             {% for review in reviews %}
@@ -48,12 +78,29 @@
 
             {% endfor %}
         </div>
-
-
     </div>
+
 
 
 {% endblock %}
 
 {% block js %}
+    <script>
+        const toggleSwitchEditMode = document.querySelector('input[type="checkbox"]#edit');
+        const normalPost = document.querySelector('#post__normal');
+        const adminPost = document.querySelector('#post__admin');
+
+        function switchEditMode(e) {
+            if (e.target.checked) {
+                adminPost.style.display = 'block';
+                normalPost.style.display = 'none';
+            }
+            else {
+                adminPost.style.display = 'none';
+                normalPost.style.display = 'block';
+            }
+        }
+
+        toggleSwitchEditMode.addEventListener('change', switchEditMode, false);
+    </script>
 {% endblock %}

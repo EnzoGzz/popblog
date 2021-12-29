@@ -1,0 +1,19 @@
+{% extends "template.twig" %}
+
+{% block style %}
+    <link rel="stylesheet" href="/public/css/post.css">
+{% endblock %}
+
+{% block content %}
+
+        {% include "Error.twig" %}
+        <form id="post" method="post" action="{{ route("InsertPost") }}">
+            <input name="title" type="text" placeholder="Title"/>
+            <textarea name="description" placeholder="Type some text here..."></textarea>
+            <input type="submit">
+        </form>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

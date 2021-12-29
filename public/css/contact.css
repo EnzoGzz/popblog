@@ -1,4 +1,3 @@
-
 form#contact{
     width: 75%;
     margin-left: auto;
@@ -16,4 +15,12 @@ form#contact{
 textarea{
     max-height: 250px;
     resize: vertical;
+}
+#contacts{
+    display: grid;
+    grid-gap: 20px;
+}
+.contact{
+    border: 2px dashed var(--primary);
+    border-radius: 4px;
 }

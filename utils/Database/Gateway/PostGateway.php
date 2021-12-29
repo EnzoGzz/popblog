@@ -41,7 +41,7 @@ class PostGateway extends Gateway
 
     public function insert(Post $post): bool
     {
-        $query = "insert into Post(title, description) VALUES(:title,:desciption)";
+        $query = "insert into Post(title, description) VALUES(:title,:description)";
         return $this->con->executeQuery($query,[
             ":title"=>[$post->getTitle(),PDO::PARAM_STR],
             ":description"=>[$post->getDescription(),PDO::PARAM_STR]

@@ -21,9 +21,10 @@ new Route("/blog/{id}/comment/insert",[UserController::class,"insertComment"],"I
 
 
 if(ModelAdmin::isLogin()){
-    new Route("/blog/insert",[AdminController::class,"insertPost"],"InsertBlog");
     new Route("/logout",[AdminController::class,"logout"],"Logout");
     new Route("/adminBlog",[AdminController::class,"post"],"AdminBlogs");
+    new Route("/adminBlog/create",[AdminController::class,"createPost"],"CreatePost");
+    new Route("/adminBlog/insert",[AdminController::class,"insertPost"],"InsertPost",["POST"]);
     new Route("/adminBlog/{id}",[AdminController::class,"showPost"],"AdminBlog");
     new Route("/adminBlog/{id}/delete",[AdminController::class,"deletePost"],"DeleteBlog");
     new Route("/adminBlog/{id}/comment/{idComment}/delete",[AdminController::class,"deleteComment"],"DeleteComment");

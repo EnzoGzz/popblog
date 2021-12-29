@@ -5,9 +5,16 @@
 {% endblock %}
 
 {% block content %}
-    {% for contact in contacts %}
-        <p>{{ contact.email }}</p>
-        <p>{{ contact.subject }}</p>
-        <p>{{ contact.message }}</p>
-    {% endfor %}
+    <div id="contacts">
+        {% for contact in contacts %}
+            <fieldset class="contact">
+                <legend><i class="fas fa-hand-paper"></i>{{ contact.subject }}</legend>
+
+                <p>{{ contact.message }}</p>
+                <p style="text-align: right"><i>From : {{ contact.email }}</i></p>
+                <hr>
+                <p><i class="fas fa-trash-alt"></i> <a href="{{ route("deleteContact",[contact.id]) }}">Delete</a></p>
+            </fieldset>
+        {% endfor %}
+    </div>
 {% endblock %}

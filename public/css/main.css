@@ -21,6 +21,15 @@ Main css
         5.6px 5.6px 17.9px rgba(0, 0, 0, 0.042),
         10.4px 10.4px 33.4px rgba(0, 0, 0, 0.05),
         25px 25px 80px rgba(0, 0, 0, 0.07);
+
+    --smooth-box-shadow-inset :
+            inset 0.7px 0.7px 2.2px rgba(0, 0, 0, 0.02),
+            inset 1.7px 1.7px 5.3px rgba(0, 0, 0, 0.028),
+            inset 3.1px 3.1px 10px rgba(0, 0, 0, 0.035),
+            inset 5.6px 5.6px 17.9px rgba(0, 0, 0, 0.042),
+            inset 10.4px 10.4px 33.4px rgba(0, 0, 0, 0.05),
+            inset 25px 25px 80px rgba(0, 0, 0, 0.07);
+
     --border-radius : 8px;
 }
 [data-theme="dark"]{
@@ -61,11 +70,14 @@ legend,textarea,label,input,i,p,a,li,ul,ol,h1,h2,h3,h4,h5,h6 {
     padding: 0;
     margin: 0;
 }
+legend{
+    font-weight: bold;
+}
 p a{
     color: var(--primary);
     text-decoration: underline;
 }
-input:not([type="submit"]), textarea{
+input:not([type="submit"],[type="checkbox"]), textarea{
     min-height: 30px;
     padding: 4px;
     border: none;
@@ -151,7 +163,7 @@ section#footer{
 
 .hero{
     width: 100%;
-    padding: 0 10% 0 10%;
+    /*padding: 0 10% 0 10%;*/
     margin-bottom: 32px;
 }
 .hero__title{
@@ -161,4 +173,10 @@ section#footer{
 }
 .hero__title > i{
     padding-right: 4px;
+}
+
+.hidden{
+    visibility: hidden;
+    height: 0;
+    width: 0;
 }

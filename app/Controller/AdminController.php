@@ -29,6 +29,10 @@ class AdminController extends Controller
         ]);
     }
 
+    public function createPost(){
+        $this->render('PostCreate');
+    }
+
     public function insertPost()
     {
         try{
@@ -57,7 +61,8 @@ class AdminController extends Controller
                 throw new Exception("Please contact an administrator");
             }
         }catch (Exception $e){
-            $this->redirect($this->route("AdminBlogs"),errors: $e->getMessage());
+            $this->redirect($this->route("CreatePost"),errors: $e->getMessage());
+            return;
         }
         $this->redirect($this->route("AdminBlogs"));
     }
@@ -69,6 +74,21 @@ class AdminController extends Controller
         $this->render('ContactAdmin',[
             "contacts" => $contacts
         ]);
+    }
+
+    public function deleteContact($id)
+    {
+        try{
+            Validation::int($id);
+            $em_contact = $this->em->getRepository(Contact::class);
+            $contact = $em_contact->find($id);
+            $this->em->remove($contact);
+            $this->em->flush();
+            $this->redirect($this->route("AdminContact"));
+        }catch (Exception $e) {
+            echo $e->getMessage();
+            $this->redirect($this->route("error404"));
+        }
     }
 
     public function logout(){
@@ -167,6 +187,6 @@ class AdminController extends Controller
             $this->redirect($this->route("AdminBlog",[$idPost]), errors: $e->getMessage());
             return;
         }
-        $this->redirect($this->route("AdminBlogs"));
+        $this->redirect($this->route("AdminBlog",[$idPost]));
     }
 }
