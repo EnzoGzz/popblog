@@ -129,6 +129,35 @@ nav#menu{
 
     font-weight: bold;
 }
+#menu__list li{
+    transition: transform .5s ease;
+}
+
+#menu__list li a{
+    position: relative;
+}
+
+#menu__list li a:after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: scale(0);
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-color);
+    transform-origin: bottom left;
+    transition: transform .5s ease;
+}
+#menu__list li a:hover:after{
+    transform: scale(1);
+}
+
+#menu__list li:hover{
+    transform: scale(1.25);
+}
+
+
 /* Footer */
 section#footer{
     height: 100%;
@@ -172,4 +201,25 @@ section#footer{
 }
 .hero__title > i{
     padding-right: 4px;
+}
+
+
+/* Animation transition */
+
+#content{
+    animation: fadein 1s;
+}
+#content.animate-out{
+    animation: fadeout 1s;
+}
+
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
 }

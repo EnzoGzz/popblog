@@ -13,9 +13,11 @@
         </div>
         <hr>
         <div id="post">
+            <pre>
             {% apply markdown_to_html %}
                 {{ post.description }}
             {% endapply %}
+            </pre>
         </div>
     </div>
 

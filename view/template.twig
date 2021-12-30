@@ -71,6 +71,12 @@
 </body>
 
 <script>
+    window.addEventListener("beforeunload", function () {
+        document.querySelector('#content').classList.add("animate-out");
+    });
+</script>
+
+<script>
     /*Light - Dark mode handler*/
 
     const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');

@@ -29,11 +29,7 @@
         <div id="post">
 
             <div id="post__normal">
-
-                {% apply markdown_to_html %}
-                    {{ post.description }}
-                {% endapply %}
-
+                {% apply markdown_to_html|nl2br %}{{ post.description }}{% endapply %}
             </div>
 
             <form style="display: none" id="post__admin" method="post" action="{{ route("UpdatePost",[post.id]) }}">
