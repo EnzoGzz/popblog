@@ -15,8 +15,17 @@ use Twig\RuntimeLoader\RuntimeLoaderInterface;
 
 abstract class Controller
 {
+    /**
+     * @var Environment
+     * twig environment
+     */
     private Environment $twig;
+    /**
+     * @var DB
+     * Database connection
+     */
     protected DB $con;
+
 
     public function __construct()
     {
@@ -29,11 +38,19 @@ abstract class Controller
 
     }
 
+    /**
+     * @return void
+     * Load twig variables
+     */
     private function twigVariables(){
         $this->twig->addGlobal("session",$_SESSION);
         $this->twig->addGlobal("cookie",$_COOKIE);
     }
 
+    /**
+     * @return void
+     * Load twig extension
+     */
     private function twigExtensionLoader(){
         $this->twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
             public function load($class): ?MarkdownRuntime
@@ -52,6 +69,12 @@ abstract class Controller
         $this->twig->addExtension($markdownExtension);
     }
 
+    /**
+     * @param string $name
+     * @param array $args
+     * @return void
+     * Render view
+     */
     protected function render(string $name, array $args = [])
     {
         try{
@@ -61,11 +84,24 @@ abstract class Controller
         }
     }
 
+    /**
+     * @param string $name
+     * @param array $args
+     * @return string
+     * Get route path
+     */
     protected function route(string $name, array $args = []):string
     {
         return RouteExtension::route($name,$args);
     }
 
+    /**
+     * @param string $url
+     * @param string|null $messages
+     * @param string|null $errors
+     * @return void
+     * Redirect client to route
+     */
     protected function redirect(string $url, string $messages = null, string $errors = null):void
     {
         if($messages !== null)$_SESSION["messages"][] = $messages;

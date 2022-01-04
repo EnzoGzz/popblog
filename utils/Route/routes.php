@@ -29,6 +29,7 @@ if(ModelAdmin::isLogin()){
     new Route("/adminBlog/{id}/delete",[AdminController::class,"deletePost"],"DeleteBlog");
     new Route("/adminBlog/{id}/comment/{idComment}/delete",[AdminController::class,"deleteComment"],"DeleteComment");
     new Route("/adminContact",[AdminController::class,"showContact"],"AdminContact");
+    new Route("/adminContact/{id}/delete",[AdminController::class,"deleteContact"],"DeleteContact");
     new Route("/adminBlog/{id}/update",[AdminController::class,"updatePost"],"UpdatePost",["POST"]);
 }
 

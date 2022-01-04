@@ -8,7 +8,7 @@ use Utils\Exception\DatabaseException;
 
 class ContactGateway extends Gateway
 {
-    public function find(int $id):array
+    public function find(int $id): ?Contact
     {
         $query = "select * from Contact where id=:id";
         $this->con->executeQuery($query,[
@@ -21,9 +21,9 @@ class ContactGateway extends Gateway
             $contact->setMessage($result["message"]);
             $contact->setSubject($result["subject"]);
             $contact->setId($result["id"]);
-            $contacts[] = $contact;
+            return $contact;
         }
-        return $contacts ?? [];
+        return null;
     }
 
     public function findAll():array

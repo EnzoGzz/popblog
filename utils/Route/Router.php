@@ -3,6 +3,7 @@
 namespace Utils\Route;
 
 use App\Controller\ErrorController;
+use Error;
 use Exception;
 
 class Router
@@ -18,6 +19,7 @@ class Router
             $route = $this->getRouteMatch($path,$method);
             $controller = $route->getController();
             $method = $route->getMethod();
+
             $parameters = $route->getVariables();
             $controller = new $controller();
             if (!is_callable($controller)) {
@@ -25,7 +27,7 @@ class Router
             }
             $controller(...array_values($parameters));
 
-        }catch (Exception $e){
+        }catch (Exception|Error $e){
 //            echo "<pre>";
 //            var_dump($e);
 //            echo "</pre>";

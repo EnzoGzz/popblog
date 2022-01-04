@@ -4,7 +4,6 @@ namespace Utils\Database\Gateway;
 
 use App\Model\User;
 use PDO;
-use Utils\Database\DB;
 
 class UserGateway extends Gateway
 {

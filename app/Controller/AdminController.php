@@ -2,24 +2,22 @@
 
 namespace App\Controller;
 
-use App\Model\Contact;
-use App\Model\Review;
 use App\Model\Post;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Exception;
 use Utils\Database\Gateway\ContactGateway;
 use Utils\Database\Gateway\PostGateway;
 use Utils\Database\Gateway\ReviewGateway;
+use Utils\Exception\ValidationException;
 use Utils\ModelAdmin;
 use Utils\Validation;
-use Utils\Exception\DatabaseException;
 
 class AdminController extends Controller
 {
 
-
+    /**
+     * @return void
+     * load and render all post - admin
+     */
     public function post()
     {
         $em_post = new PostGateway($this->con);
@@ -29,25 +27,34 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @return void
+     * render page for create post
+     */
     public function createPost(){
         $this->render('PostCreate');
     }
 
+    /**
+     * @return void
+     * insert post in database
+     */
     public function insertPost()
     {
+        phpinfo();
         try{
             $title = $_POST['title'] ?? "";
             try {
                 Validation::require($title);
                 Validation::maxChar($title, 255);
-            } catch (DatabaseException $e) {
+            } catch (ValidationException) {
                 throw new Exception("Invalid title - max 255 characters");
             }
             $desc = $_POST['description'] ?? "";
             try {
                 Validation::require($desc);
                 Validation::maxChar($desc, 2000);
-            } catch (DatabaseException $e) {
+            } catch (ValidationException) {
                 throw new Exception("Invalid description - max 2000 characters");
             }
 
@@ -57,7 +64,7 @@ class AdminController extends Controller
                 $post->setTitle($title);
                 $post->setDescription($desc);
                 $em_post->insert($post);
-            } catch (Exception $e) {
+            } catch (Exception) {
                 throw new Exception("Please contact an administrator");
             }
         }catch (Exception $e){
@@ -67,6 +74,10 @@ class AdminController extends Controller
         $this->redirect($this->route("AdminBlogs"));
     }
 
+    /**
+     * @return void
+     * load and render all contact - admin
+     */
     public function showContact()
     {
         $em_post = new ContactGateway($this->con);
@@ -76,52 +87,60 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return void
+     * @throws ValidationException
+     * delete contact
+     */
     public function deleteContact($id)
     {
-        try{
-            Validation::int($id);
-            $em_contact = $this->em->getRepository(Contact::class);
-            $contact = $em_contact->find($id);
-            $this->em->remove($contact);
-            $this->em->flush();
-            $this->redirect($this->route("AdminContact"));
-        }catch (Exception $e) {
-            echo $e->getMessage();
-            $this->redirect($this->route("error404"));
-        }
+        Validation::int($id);
+        $em_contact = new ContactGateway($this->con);
+        $contact = $em_contact->find($id);
+        $em_contact->remove($contact);
+        $this->redirect($this->route("AdminContact"));
     }
 
+    /**
+     * @return void
+     * logout administrator
+     */
     public function logout(){
         ModelAdmin::logout();
         $this->redirect($this->route("Home"));
     }
 
+    /**
+     * @param int $id
+     * @return void
+     * @throws ValidationException
+     * delete post
+     */
     public function deletePost(int $id)
     {
-        try{
-            Validation::int($id);
-            $em_post = new PostGateway($this->con);
-            $em_comment = new ReviewGateway($this->con);
-            $post = $em_post->find($id);
-            if($post === null) throw new Exception("Heu beug");
-            $comments = $em_comment->findByPost($post);
-            foreach ($comments as $comment) {
-                $em_comment->remove($comment);
-            }
-            $em_post->remove($post);
-            $this->redirect($this->route("AdminBlogs"));
-        }catch (Exception $e) {
-            $this->redirect($this->route("404"));
+        Validation::int($id);
+        $em_post = new PostGateway($this->con);
+        $em_comment = new ReviewGateway($this->con);
+        $post = $em_post->find($id);
+        if($post === null) throw new Exception("Heu beug");
+        $comments = $em_comment->findByPost($post);
+        foreach ($comments as $comment) {
+            $em_comment->remove($comment);
         }
+        $em_post->remove($post);
+        $this->redirect($this->route("AdminBlogs"));
     }
 
+    /**
+     * @param int $id
+     * @return void
+     * @throws ValidationException
+     * load and render post
+     */
     public function showPost(int $id)
     {
-        try{
-            Validation::int($id);
-        } catch (DatabaseException $e) {
-            $this->redirect($this->route("404"));
-        }
+        Validation::int($id);
         $em_post = new PostGateway($this->con);
         $em_comment = new ReviewGateway($this->con);
         $post = $em_post->find($id);
@@ -132,46 +151,49 @@ class AdminController extends Controller
                 'reviews' => $reviews
             ]);
         }else{
-            $this->redirect($this->route("404"));
+            throw new Exception();
         }
 
     }
 
+    /**
+     * @param int $idPost
+     * @param int $idComment
+     * @return void
+     * @throws ValidationException
+     * delete comment
+     */
     public function deleteComment(int $idPost, int $idComment){
-        try{
-            Validation::int($idComment);
-            Validation::int($idPost);
-            $em_comment = new ReviewGateway($this->con);
-            $comment = $em_comment->find($idComment);
-            $em_comment->remove($comment);
-            $this->redirect($this->route("AdminBlog",[$idPost]));
-        } catch (Exception $e) {
-            $this->redirect($this->route("404"));
-        }
+        Validation::int($idComment);
+        Validation::int($idPost);
+        $em_comment = new ReviewGateway($this->con);
+        $comment = $em_comment->find($idComment);
+        $em_comment->remove($comment);
+        $this->redirect($this->route("AdminBlog",[$idPost]));
     }
 
+    /**
+     * @param int $idPost
+     * @return void
+     * @throws ValidationException
+     * update comment
+     */
     public function updatePost(int $idPost):void
     {
-        try{
-            Validation::int($idPost);
-        }catch (DatabaseException $e){
-            $this->redirect($this->route("404"));
-            return;
-        }
-
+        Validation::int($idPost);
         try{
             $title = $_POST['title'] ?? "";
             try {
                 Validation::require($title);
                 Validation::maxChar($title, 255);
-            } catch (DatabaseException $e) {
+            } catch (ValidationException) {
                 throw new Exception("Invalid title - max 255 characters");
             }
             $description = $_POST['description'] ?? "";
             try {
                 Validation::require($description);
                 Validation::maxChar($description, 2000);
-            } catch (DatabaseException $e) {
+            } catch (ValidationException) {
                 throw new Exception("Invalid description - max 2000 characters");
             }
 
