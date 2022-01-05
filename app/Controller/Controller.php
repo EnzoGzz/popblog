@@ -5,6 +5,7 @@ namespace App\Controller;
 use Exception;
 use Twig\Environment;
 use Twig\Extra\Markdown\MarkdownExtension;
+use Twig\Extra\String\StringExtension;
 use Twig\Loader\FilesystemLoader;
 use Utils\Database\DB;
 use Utils\TwigExtension\MessageExtension;
@@ -64,9 +65,11 @@ abstract class Controller
         $routeExtension = new RouteExtension();
         $messageExtension = new MessageExtension();
         $markdownExtension = new MarkdownExtension();
+        $stringExtension = new StringExtension();
         $this->twig->addExtension($routeExtension);
         $this->twig->addExtension($messageExtension);
         $this->twig->addExtension($markdownExtension);
+        $this->twig->addExtension($stringExtension);
     }
 
     /**

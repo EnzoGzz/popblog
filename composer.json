@@ -8,7 +8,9 @@
         "doctrine/orm": "^2.10",
         "symfony/cache" :"*",
         "twig/markdown-extra": "^3.3",
-        "league/commonmark": "^2.1"
+        "league/commonmark": "^2.1",
+        "twig/extra-bundle": "^3.3",
+        "twig/string-extra": "^3.3"
     },
     "license": "mit",
     "autoload": {
