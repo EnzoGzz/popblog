@@ -30,7 +30,7 @@ class UserGateway extends Gateway
     {
         $query = "select * from User where username=:username LIMIT 1";
         $this->con->executeQuery($query,[
-            ":username"=>[$username,PDO::PARAM_INT]
+            ":username"=>[$username,PDO::PARAM_STR]
         ]);
         $results = $this->con->getResults();
         foreach ($results as $result){
@@ -41,5 +41,26 @@ class UserGateway extends Gateway
             return $user;
         }
         return null;
+    }
+
+    public function insert(string $username, string $password){
+        $query = "Insert into User(username, password) VALUES(:username,:password)";
+        $this->con->executeQuery($query,[
+            ":username"=>[$username,PDO::PARAM_STR],
+            ":password"=>[$password,PDO::PARAM_STR]
+        ]);
+    }
+
+    public function create(){
+        $query = "
+            create table User
+            (
+                id       int auto_increment
+                    primary key,
+                username varchar(255) not null,
+                password varchar(255) not null
+            );
+        ";
+        $this->con->executeQuery($query);
     }
 }

@@ -66,4 +66,25 @@ class ReviewGateway extends Gateway
             ":id"=>[$review->getId(),PDO::PARAM_INT]
         ]);
     }
+
+    public function create()
+    {
+        $query = "
+            create table Review
+            (
+                id       int auto_increment
+                    primary key,
+                username varchar(255) not null,
+                comment  longtext     not null,
+                post     int          null,
+                constraint FK_5BC96BF05A8A6C8D
+                    foreign key (post) references Post (id)
+            )
+                collate = utf8_unicode_ci;
+            
+            create index IDX_5BC96BF05A8A6C8D
+            on Review (post);
+        ";
+        $this->con->executeQuery($query);
+    }
 }

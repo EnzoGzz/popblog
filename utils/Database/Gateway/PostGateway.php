@@ -63,4 +63,16 @@ class PostGateway extends Gateway
             ":id"=>[$post->getId(),PDO::PARAM_INT]
         ]);
     }
+
+    public function create(){
+        $query = "
+            create table Post
+            (
+                id          int auto_increment primary key,
+                title       varchar(255) not null,
+                description longtext     not null
+            )
+        ";
+        $this->con->executeQuery($query);
+    }
 }

@@ -4,7 +4,6 @@ namespace Utils;
 
 use Exception;
 use Utils\Database\Gateway\UserGateway;
-use Utils\Exception\ValidationException;
 
 class ModelAdmin
 {
