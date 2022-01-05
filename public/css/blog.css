@@ -8,11 +8,9 @@
     padding: 16px;
     height: 200px;
     overflow: hidden;
-
     background-color: var(--background);
 
     box-shadow: var(--smooth-box-shadow);
-    -webkit-box-shadow: var(--smooth-box-shadow);
     border-radius: var(--border-radius);
 
     cursor: pointer;

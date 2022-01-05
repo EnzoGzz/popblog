@@ -17,9 +17,11 @@
                 <div class="post__card" onclick="window.location.href = '{{ route("Blog",[post.id]) }}'">
                     <h2>{{ post.title }}</h2>
                     <hr>
-                    {% apply markdown_to_html %}
-                        {{ post.description|u.truncate(200)}}...
-                    {% endapply %}
+                    <span>
+                        {% apply markdown_to_html %}
+                            {{ post.description | u.truncate(75) }}...
+                        {% endapply %}
+                    </span>
                 </div>
             {% endfor %}
         </div>
