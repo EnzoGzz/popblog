@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-<img src="public/assets/logo_white.png" alt="Logo" width="512"/>
+<img src="public/assets/logo_white.png" alt="Logo" width="200"/>
 <h1>PopBlog</h1>
 </div>
 
