@@ -1,6 +1,9 @@
-# popblog
-___
-## projet web
+<div style="text-align: center;">
+<img src="public/assets/logo_white.png" alt="Logo" width="512"/>
+<h1>PopBlog</h1>
+</div>
+
+## Qu'est ce que PopBlog
 
 Popblog est un blog écrit en PHP sous l'architecture MVC. Vous pourrez administrer les articles, les commentaires et les demandes des utilisateurs.
 Un utilisateur pourra quand à lui, voir les articles et les commenter.
@@ -45,6 +48,8 @@ const APP_ENV = "PROD";
 ___
 Après avoir installer la base de données, supprimer le fichier install.php
 ___
-
+Auteur :
 - G5 - Gonzalez Enzo
 - G5 - Murat Romain
+___
+[Licence](LICENSE)
