@@ -41,7 +41,6 @@ class AdminController extends Controller
      */
     public function insertPost()
     {
-        phpinfo();
         try{
             $title = $_POST['title'] ?? "";
             try {
