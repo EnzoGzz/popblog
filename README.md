@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div align="center">
 <img src="public/assets/logo_white.png" alt="Logo" width="200"/>
 <h1>PopBlog</h1>
 </div>
@@ -44,7 +44,7 @@ Changer l'environnement de l'application en production
 const APP_ENV = "PROD";
 ```
 
-#Important
+# Important
 ___
 Après avoir installer la base de données, supprimer le fichier install.php
 ___
