@@ -188,6 +188,10 @@ class UserController extends Controller
 
     }
 
+    public function easteregg(){
+        $this->render('Easteregg');
+    }
+
     /**
      * @return void
      * render login page

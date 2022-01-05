@@ -18,6 +18,7 @@ new Route("/login",[UserController::class,"login"],"Login");
 new Route("/login",[UserController::class,"loginPost"],"LoginPost",["POST"]);
 new Route("/error404",[ErrorController::class,"error404"],"404");
 new Route("/blog/{id}/comment/insert",[UserController::class,"insertComment"],"InsertComment",["POST"]);
+new Route("/easteregg",[UserController::class,"easteregg"],"Easteregg");
 
 
 if(ModelAdmin::isLogin()){
