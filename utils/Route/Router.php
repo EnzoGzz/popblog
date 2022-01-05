@@ -28,9 +28,6 @@ class Router
             $controller(...array_values($parameters));
 
         }catch (Exception|Error $e){
-//            echo "<pre>";
-//            var_dump($e);
-//            echo "</pre>";
 
             (new ErrorController())->error404();
         }
