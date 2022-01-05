@@ -14,8 +14,8 @@ composer install
 **Fichier config.php**
 ```php
 const DB_NAME = "popblog";
-const DB_USERNAME = "your_username";
-const DB_PASSWORD = "your_password";
+const DB_USERNAME = "your username database";
+const DB_PASSWORD = "your password database";
 const APP_ENV = "PROD";
 ```
 
@@ -24,6 +24,10 @@ const APP_ENV = "PROD";
 Changer l'environnement de l'application en local
 ```php
 const APP_ENV = "LOCAL";
+```
+Modifier le compte administrateur par defaut en modifiant le fichier install.php ligne 17
+```php
+$dbc->makeUser("your username popblog","your password popblog");
 ```
 Allez sur la page :
 ```

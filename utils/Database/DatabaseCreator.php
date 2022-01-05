@@ -22,10 +22,10 @@ class DatabaseCreator
         $db_gateway->create();
     }
 
-    public function makeUser(){
+    public function makeUser(string $username,string $password){
         $em_user = new UserGateway($this->con);
         $em_user->create();
-        $em_user->insert("test",password_hash("test",PASSWORD_DEFAULT));
+        $em_user->insert($username,password_hash($password,PASSWORD_DEFAULT));
     }
 
     public function makeContact(){

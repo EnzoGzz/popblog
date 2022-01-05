@@ -14,7 +14,7 @@ if (APP_ENV === "LOCAL"){
         $dbc->makeDatabase();
         $con_loc = new DB("mysql:host=localhost;port=3306;dbname=".DB_NAME,DB_USERNAME,DB_PASSWORD);
         $dbc = new DatabaseCreator($con_loc);
-        $dbc->makeUser();
+        $dbc->makeUser("admin","admin");
         $dbc->makeContact();
         $dbc->makePost();
         $dbc->makeReview();
