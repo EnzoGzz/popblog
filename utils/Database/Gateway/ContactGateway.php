@@ -58,7 +58,7 @@ class ContactGateway extends Gateway
     }
 
     public function remove(Contact $contact){
-        $query = "delete from Contact where :id";
+        $query = "delete from Contact where id=:id";
         $this->con->executeQuery($query,[
             ":id"=>[$contact->getId(),PDO::PARAM_INT]
         ]);
