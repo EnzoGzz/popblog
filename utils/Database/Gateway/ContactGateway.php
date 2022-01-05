@@ -63,4 +63,19 @@ class ContactGateway extends Gateway
             ":id"=>[$contact->getId(),PDO::PARAM_INT]
         ]);
     }
+
+    public function create(){
+        $query  = "
+        create table Contact
+        (
+            id      int auto_increment,
+            email   varchar(255) not null,
+            message mediumtext   not null,
+            subject tinytext     not null,
+            constraint Contact_id_uindex
+                unique (id)
+        );
+        ";
+        $this->con->executeQuery($query);
+    }
 }
