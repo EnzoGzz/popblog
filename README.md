@@ -7,6 +7,9 @@ Un utilisateur pourra quand à lui, voir les articles et les commenter.
 ___
 ## Installation
 **Prerequis** : [composer](https://getcomposer.org/download/)
+
+Votre serveur web doit pouvoir lire les fichiers .htaccess : 
+- [Enable htaccess file on Apache](https://httpd.apache.org/docs/2.4/fr/mod/core.html#allowoverride)
 ```
 git clone https://github.com/EnzoGzz/popblog.git
 composer install
